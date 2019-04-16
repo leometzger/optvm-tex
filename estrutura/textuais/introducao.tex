@@ -1,0 +1,40 @@
+\chapter{INTRODUÇÃO}
+\label{chap:introducao}
+
+Com a evolução da computação em nuvem, surgiram necessidades cada vez maiores de utilizar ao 
+máximo o poder dos computadores sem sobrecarregá-los. Estas necessidades surgem para atender 
+requisitos de diminuição de custos, aumento de desempenho, entre outros objetivos que fazem com que 
+usuários de computação em nuvem e empresas que usam este tipo de serviço obtenham vantagem no uso dela.
+
+Para isso, é muito comum que para otimizar o uso dos computadores de um ambiente em nuvem, 
+os provedores utilizem o mecanismo de virtualização. Hoje, os \textit{datacenters} são compostos 
+por máquinas físicas(FMs) e máquinas virtuais(VMs), sendo que, cada FM normalmente possui 
+pelo menos uma ou mais VMs. Essa utilização das VMs permite que seja construído um ambiente flexível.
+
+Em um cenário que o ambiente em que temos a possibilidade de utilizar as FMs como host de múltiplas VMs,
+ é possível que as VMs da nuvem sejam organizadas de diferentes maneiras em relação as FMs para que atinjam 
+ os objetivos dos interessados. Os objetivos podem ser os mais variados. Por exemplo, uma empresa que 
+ use o serviço da nuvem pode querer ter um alto desempenho, assim como pode querer ter o menor custo 
+ possível. Por esse motivo, existem pesquisas que buscam maneiras de otimizar esses objetivos e buscar 
+ uma forma de resolver este tipo problema, o qual é chamado otimização baseado em múltiplos objetivos. 
+
+A migração de uma VM envolve algumas etapas, como, a descoberta da necessidade de migração, 
+a escolha de uma VM a ser migrada e a escolha de um host de destino para essa VM.
+ A etapa em que este trabalho está interessado é a escolha de um host de destino para a VM. 
+ Considerando que uma migração seja considerada cara do ponto de vista computacional. 
+ O momento da migração deve ser bem escolhido para evitar que a própria migração não incorra em 
+ prejuízos. Assim como o momento da migração é importante, a escolha de um destino também é, 
+ pois o host selecionado tem que atender os objetivos e restrições que a VM necessita, para que 
+ não haja a sobrecarga do host de destino e implique em uma nova migração.
+
+O trabalho tem papel de servir como apoio para a migração de VMs em ambientes de computação em nuvem. 
+O trabalho faz uso de uma abordagem em que um usuário, que precise migrar uma VM, possa 
+utilizar um serviço que selecionará as melhores opções de host para fazer a migração de uma VM. 
+O serviço possui uma abordagem que utiliza algoritmos que fazem a seleção do host baseado em múltiplos objetivos.
+ Contudo, o serviço é uma caixa preta, esta característica traz uma grande vantagem, o usuário não precisa conhecer nada 
+ sobre os algoritmos utilizados, precisa apenas utilizar a interface que é definida pelo serviço. 
+
+\section{ORGANIZAÇÃO DO TRABALHO}
+\label{sec:organizacaoTrabalho}
+
+TODO

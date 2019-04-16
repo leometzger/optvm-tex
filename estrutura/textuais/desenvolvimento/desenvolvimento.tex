@@ -1,0 +1,77 @@
+\chapter{OPTVM}
+
+O OptVM é um sistema que tem o propósito de dar suporte para a migração de VMs através de serviços utilizando o modelo cliente/servidor. 
+O sistema possui dois principais serviços para atingir seu objetivo: 
+um faz a filtragem de hosts aplicando restrições definidas pelo cliente do serviço e a 
+outra destina-se a quem precisa definir os melhores hosts para migrar uma VM baseando-se em 
+objetivos também definidos pelo cliente.
+
+Por lidar com conhecimentos específicos, o OptVM busca ser uma solução caixa preta, onde, o usuário não necessita 
+saber nada sobre o funcionamento interno, algoritmos utilizados, etc. Basta utilizar suas APIs para fazer uso de suas funcionalidades.
+
+Neste capítulo, serão apresentadas uma visão geral da a implementação do OptVM. 
+No primeiro momento será falado sobre o modelo de comunicação que foi escolhido e o porquê. 
+Após isso, técnicas e ferramentas utilizadas para a construção dos serviços de aplicação das constraints e também da otimização.
+
+\section{Comunicação}
+Em termos gerais, uma API é uma interface de software que pode se
+
+Como o OptVM é um serviço que deve ser disponibilizado para uma arquitetura de 
+cliente/servidor de maneira distribuída, haviam três possíveis maneiras de implementá-lo, 
+que eram REST, SOAP e via chamadas RPC. 
+Para o desenvolvimento do OptVM o foi escolhido implementação utilizando o modelo REST. 
+A escolha desta opção se deu pelos seguintes motivos:
+
+\begin{enumerate}
+\item É um padrão arquitetural bastante maduro;
+\item É agnóstico em relação a liguangens de programação;
+\item É bastante flexivel em relação ao modelo de comunicação.
+\end{enumerate}
+
+O padrão REST, definido por Fielding, sugere que se deve criar uma interface para interação com o sistema. Essa interface é representada
+através de recursos.
+
+O OptVM trabalha em cima de um único recurso, chamado \textit{otpimizations}.
+
+\section{Representação do serviço}
+
+O padrão arquitetural REST é agnostico em relação ao formato utilizado para fazer a comunicação dos dados. O \textit{econding} 
+dos dados pode ser feito da maneira que for mais conveniente para o usuário. No caso do OptVM
+
+\begin{lstlisting}[language=json,firstnumber=1]
+{
+  "id": 1,
+  "objectives": [
+    "MIN_SOMETHING",
+    "MAX_SOMETHING"
+  ],
+  "hosts": [
+    {
+      "id": 1,
+      "memory": 2000,
+      "bandwidth": 1000,
+      "vms": [
+        {
+          "id": 10,
+          "space": 20,
+          "memory": 150
+        }
+      ]
+    }
+  ]
+}
+\end{lstlisting}
+
+\section{Representação para o algoritmo}
+
+Nos algoritmos genéticos, existem vários tipos de representações que podem ser utilizadas para representar nossa solução. Quando utiliza-se
+o algoritmo, uma boa representação ajuda a melhorar os resultados do algoritmo. 
+
+A representação escolhida para esse serviço foi a representação por inteiros, onde, cada inteiro representa um host e 
+a posição em um vetor de inteiros representa uma VM.
+
+A primeira posição "0" significa que a VM 0 está presente no HOST 10, a VM 1 está presente no HOST 20, e assim sucessivamente.
+
+\section{Utilização do algoritmo}
+
+TODO

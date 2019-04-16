@@ -1,0 +1,169 @@
+\chapter{REVISÃO DE LITERATURA}
+\label{chap:fundamentacaoTeorica}
+
+Neste capítulo, são apresentados alguns conceitos e termos utilizados no decorrer do trabalho. 
+Estes, também darão base para compreender a escolha das técnicas utilizadas. 
+Os conceitos são relacionados a construção do sistema. 
+Os conceitos estão relacionados a otimização multiobjetivo e comunicação cliente/servidor, 
+que são os dois pilares do sistema que será desenvolvido.
+
+\section{Service Oriented Architecture}
+O desenvolvimento de software para um ambiente corporativo é uma tarefa complexa. 
+Conforme Brown \cite{brown}, no decorrer dos anos, a comunidade de desenvolvimento de software se 
+dedicou em desenvolver novas abordagens, processos e ferramentas para a construção de softwares de 
+grande escala. 
+
+Brown considera que uma maneira de descrever um sistema de software é como sendo um composto de 
+uma coleção de serviços. Cada serviço, provem um conjunto de funcionalidades bem definidas. 
+As funcionalidades do serviço sendo bem definidas e sólidas, torna possível a construção de serviços 
+compostos, ou seja, uma funcionalidade que faça a utilização de outras funcionalidades ou serviços. 
+Esta modularização e coordenação de serviços e funcionalidades caracteriza um 
+Service Oriented Architecture (SOA).
+
+Segundo \cite{valipour}, SOA pode ser definido como um design de software utilizado para 
+conectar negócios e recursos computacionais sob demanda, e isso possibilita os usuários 
+do serviço (podendo ser outros serviços ou usuários finais) alcançarem seus objetivos. 
+
+Existem diversas maneiras de implementar uma aplicação baseada em SOA, o importante é que 
+sua interface seja bem definida com as operações que podem ser realizadas. 
+Uma das grandes vantagens do SOA, é a facilidade que ele provém na integração de sistemas. 
+Segundo \cite{valipour}, com as operações bem definidas e disponíveis, o consumidor do SOA, 
+pode se preocupar somente com o que determinado serviço faz e não como é implementado.
+
+As principais características de um software feito utilizando SOA são que ele é auto contido e 
+modular, interoperável, fracamente acoplado, passível de composição e possui transparência de localização. 
+Como SOA não limita a estratégia utilizada para o desenvolvimento do mesmo, pode-se utilizar qualquer 
+técnica para implementá-lo. No ambiente corporativo, os serviços comumente são implementados 
+utilizando web services SOAP, REST ou chamadas RPCs.
+
+\subsection{Simple Object Access Protocol}
+SOAP é um protocolo de comunicação baseado em XML(eXtension Markup Language) que foi criado no final 
+dos anos 90. Seu objetivo é fazer a comunicação entre o cliente e o servidor através de informações 
+passadas através de um documento XML. O protocolo utiliza um \textit{schema} XML, que é uma 
+maneira de descrever e validar o formato os dados das requisições e respostas. 
+Esse \textit{schema} é utilizado pelo cliente e pelo servidor para saber como interpretar a resposta, 
+no caso de recebimento de mensagem, e formatar a requisição, no caso de envio.
+
+O objetivo do SOAP, é expor regras de negócio de aplicação através de serviços. 
+Por esse motivo, o SOAP é uma opção comumente utilizada na construção de aplicações SOA. 
+Outra característica do SOAP, é que ele não precisa ser implementado sobre um protocolo de 
+transporte específico, é possível implementar utilizando outros protocolos, porém, 
+na maioria das vezes é utilizado HTTP.
+
+O SOAP algumas vezes é comparado com o REST, pois os dois podem ser utilizados para um objetivo 
+semelhante, porém, os dois tem um foco diferente, onde o SOAP tem como expor regras de negócio 
+como serviço e o REST visa representar um determinado estado e manipulá-lo através de operações 
+bem definidas.
+
+\subsection{Representational State Transfer (REST)}
+REST foi formalizado por Fielding \cite{fielding} em sua tese de doutorado, onde ele tem por 
+objetivo apresentar uma arquitetura para criação de sistemas network-based . 
+Na tese, REST é definido como um estilo arquitetural. Ele define uma série de restrições que devem ser 
+respeitadas na criação de um software que é implementado utilizando este estilo arquitetural. 
+As características de um software que utiliza o estilo REST serão apresentadas a seguir, assim 
+como algumas de suas vantagens de desvantagens.
+
+Uma das principais características é que o REST é implementado utilizando o modelo de comunicação 
+cliente-servidor. Isso ajuda com a separação de responsabilidades, e permite que uma portabilidade 
+de clientes do serviço implementado. Além disso, essa separação também permite que outros serviços 
+façam uso do serviço REST. Do ponto de vista de arquitetura de software, isto é muito importante, 
+pois permite que componentes fiquem bem modularizados.
+
+Outra característica que o estilo arquitetural tem, é que o serviços devem ser stateless, ou seja, as  
+requisições devem ser auto-contidas, não podem assumir algum estado ou contexto que o servidor tenha 
+previamente armazenado. 
+
+Fielding \cite{fielding} destaca que uma das características centrais do REST, e o que difere ele 
+de outros estilos arquiteturais, é a utilização de uma interface uniforme entre os componentes. 
+Esta interface uniforme é um ponto muito positivo, pois permite que a comunicação entre os 
+componentes da arquitetura seja feita de maneira genérica, o que permite escalar a comunicação 
+entre aplicações.
+
+\section{Otimização multi-objetivo}  
+Conforme Nos dias de hoje, problemas de otimização buscam um bom resultado.
+Segundo Veloso \cite{veloso} para os problemas de otimização, existem de maneira geral, 
+dois tipos de problemas, os mono-objetivos e os multi-objetivos. 
+Os mono-objetivos buscam otimizar uma solução baseando-se em um único objetivo, por consequência, 
+problemas mono-objetivo resultam em um único resultado, que pode ser considerada a solução ótima para o 
+problema. Já os multi-objetivo, buscam atender vários fatores, e isso torna a solução ótima mais 
+difícil de ser encontrada.
+
+Conforme Ticona \cite{ticona} um problema de otimização multi-objetivo, é representado por um 
+conjunto de funções objetivo que devem ser otimizadas. 
+ 
+\subsection{Algoritmos Evolucionários}
+Segundo \cite{ticona}, algoritmos evolucionários (AE) tem sido muito utilizados para problemas de 
+otimização. Um dos motivos do uso deles, é por causa da possibilidade de resolver problemas que 
+envolvam múltiplos objetivos. A abordagem utilizada neste tipo de algoritmo é baseada na 
+evolução humana. O processo é baseado seleção natural de Darwin, da mesma maneira que acontece com a 
+seleção das espécies. O algoritmo reproduz artificialmente o processo de seleção natural para 
+encontrar os mais aptos a resolver determinado problema. O objetivo desses algoritmos é 
+encontrar aproximações da solução perfeita para problemas difíceis. 
+
+Dentro da categoria dos AEs para otimização baseada em multiplos objetivos, existem diferentes modelos. 
+
+O modelo de utilizado neste trabalho é a de algoritmos genéticos (AG). Esta é uma classe de 
+algoritmos muito utilizada em otimizações multi-objetivo.
+
+\subsection{Algoritmos Genéticos}
+Existem duas abordagens principais para AGs multi-objetivo. Uma delas utiliza pesos para objetivos 
+únicos. E a outra forma, seleciona um subconjunto de um conjunto de possíveis soluções que não é 
+dominada por nenhuma das outras soluções, este subconjunto é chamado de lista de Pareto, 
+também conhecida por soluções Pareto-ótimas.
+
+Nas otimizações multi-objetivo que utilizam soluções pareto-ótimas, usa-se o conceito de 
+dominância de Pareto para  para alcançar soluções que sejam mais  adequadas para determinado problema. 
+Segundo Ticona\cite{ticona}, a dominância de um item \textbf{x} sobre um item \textbf{y} se dá quando 
+as seguintes condições são atendidas:
+
+\begin{enumerate}
+\item A solução \textbf{x} é igualmente ou mais adequada que a solução \textbf{y} em todas as funções objetivo
+\item A solução \textbf{x} é melhor do que a solução \textbf{y} em algum objetivo
+\end{enumerate}
+
+\section{Trabalhos relacionados}
+Neste capítulo será apresentado o problema em que o OptVM se propoem resolver. 
+Isso será feito através da apresentação de alguns fatos relacionados a nuvens computacionais 
+e como elas costumam ser utilizadas nos dias de hoje.
+
+\subsection{Migração de máquinas virtuais}
+As nuvens computacionais são utilizadas pela maioria das empresas de software da atualidade. 
+Por esse motivo, as maiores empresas do setor investem muito neste segmento, 
+oferecendo vários tipos de serviços diferenciados para seus consumidores. 
+Estas empresas concorrem em alguns aspectos, como: velocidade, preço, disponibilidade e etc. 
+Para aumentar sua competitividade nesses aspectos, muitas vezes é utilizada a virtualização.
+
+Com a virtualização é possível alocar partes de um recurso físico para diferentes consumidores, 
+fazendo com que um recurso físico se torne melhor utilizado. Isso deixa a alocação de recursos
+muito mais flexível, e torna possível obter uma elasticidade nos serviços oferecidos. 
+
+Uma dos objetivos de utilizar a virtualização é obter uma elasticidade dos recursos oferecidos.
+Ou seja, é possível aumentar sua capacidade de processamento, armazenamento mesmo depois que o
+já foi alocada uma VM para o usuário. 
+Isso permite que um consumidor do  serviço possa escolher o quanto precisa para executar as tarefas que deseja, 
+assim como o provedor também consegue otimizar o uso de seus recursos
+
+Essa realocação de uma VM pode ser feita a nível de nuvem, datacenter(DC) ou host. 
+Quando a realocação é feita em nível de DC ou nuvem, é muito provável que seja 
+necessário migrar uma VM do local em que ela se encontra. 
+Caso seja necessário uma migração de uma máquina, existem alguns pontos que devem ser avaliados.
+
+Três momentos podem ser considerados os pontos principais a serem avaliados para uma migração, 
+são eles:
+
+\begin{enumerate}
+\item A descoberta de uma necessidade de migração
+\item Qual máquina virtual deve ser mgirada
+\item Para onde deve ocorrer a migração
+\end{enumerate}
+
+Estas otimizações e migrações das VMs são necessárias em ambientes que envolvem uma infraestruturas
+grande, onde existem multiplos hosts, datacenters e nuvens. Por esse motivo, não é recomendado que 
+um sistema ou serviço gerencie a infraestrutura inteira sozinho, pois sua escalabilidade 
+poderia se tornar um gargalo. Isso faz com que sejam construidos diferentes serviços e aplicações 
+que se integram e gerenciam a infraesturua.
+
+\subsection{Otimização na escolha do host}
+Como citado anteriormente uma das partes essenciais na migração de uma VM é a escolha de um destino para ela.
+Para isso, é importante escolher um destino que aloque muito bem a VM e não seja necessário fazer uma outra
+migração logo em seguida. 
