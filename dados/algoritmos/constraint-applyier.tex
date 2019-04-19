@@ -1,0 +1,23 @@
+\begin{algorithm}
+    \caption{Constraint Applyier}
+    \KwIn{as $constraints$ restrições, $context(Clouds, DCs, Hosts)$ contexto com todas as opções disponíveis}
+    \KwOut{$context'(Clouds, DCs, Hosts)$ somente com Clouds/DCs/Hosts que atendem as restrições} 
+
+    $context'\leftarrow context$\\
+    \For {$constraints \in constraints$} {
+        \If {$c$ é do tipo CLOUD} {
+            aplica a $constraints$ nas núvens do contexto\\
+            $context'\leftarrow nuvensAtualizadas$\\
+        }
+        \ElseIf {$constraints$ é do tipo DC} {
+            aplica a $constraints$ nas DCs do contexto\\
+            $context'\leftarrow datacentersAtualizados$\\
+        }
+        \ElseIf {$constraints$ é do tipo HOST} {
+            aplica a $constraints$ nas Hosts do contexto\\
+            $context'\leftarrow hostsAtualizados$\\
+        }
+    }
+
+\end{algorithm}
+

@@ -1,0 +1,16 @@
+\begin{table}[!htb]
+    \centering
+    \caption[resource-optimization]{Tabela recurso otimização
+    \label{tab:tabela-optimization}}
+    \begin{tabular}{rrrrr}
+        \toprule
+            Verbo & URI & Operação \\ 
+        \midrule
+            GET & \textit{/optimizations} & Todas as otimizações \\
+            POST & \textit{/optimizations} &  Cria uma otimização \\
+            GET & \textit{/optimizations/:id} & Otimização específica \\
+            GET & \textit{/optimizations/:id/details} & Detalhes da otimização \\
+            GET & \textit{/optimizations/:id/metrics} & Métricas da otimização \\
+        \bottomrule
+    \end{tabular}
+\end{table}

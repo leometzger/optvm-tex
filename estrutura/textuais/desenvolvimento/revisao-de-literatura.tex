@@ -7,7 +7,7 @@ Os conceitos são relacionados a construção do sistema.
 Os conceitos estão relacionados a otimização multiobjetivo e comunicação cliente/servidor, 
 que são os dois pilares do sistema que será desenvolvido.
 
-\section{Service Oriented Architecture}
+\section{SERVICE ORIENTED ARCHITECTURE (SOA)}
 O desenvolvimento de software para um ambiente corporativo é uma tarefa complexa. 
 Conforme Brown \cite{brown}, no decorrer dos anos, a comunidade de desenvolvimento de software se 
 dedicou em desenvolver novas abordagens, processos e ferramentas para a construção de softwares de 
@@ -36,7 +36,7 @@ Como SOA não limita a estratégia utilizada para o desenvolvimento do mesmo, po
 técnica para implementá-lo. No ambiente corporativo, os serviços comumente são implementados 
 utilizando web services SOAP, REST ou chamadas RPCs.
 
-\subsection{Simple Object Access Protocol}
+\section{SIMPLE OBJECT ACCESS PROTOCOL (SOAP)}
 SOAP é um protocolo de comunicação baseado em XML(eXtension Markup Language) que foi criado no final 
 dos anos 90. Seu objetivo é fazer a comunicação entre o cliente e o servidor através de informações 
 passadas através de um documento XML. O protocolo utiliza um \textit{schema} XML, que é uma 
@@ -55,7 +55,7 @@ semelhante, porém, os dois tem um foco diferente, onde o SOAP tem como expor re
 como serviço e o REST visa representar um determinado estado e manipulá-lo através de operações 
 bem definidas.
 
-\subsection{Representational State Transfer (REST)}
+\section{REPRESENTATIONAL STATE TRANSFER (REST)}
 REST foi formalizado por Fielding \cite{fielding} em sua tese de doutorado, onde ele tem por 
 objetivo apresentar uma arquitetura para criação de sistemas network-based . 
 Na tese, REST é definido como um estilo arquitetural. Ele define uma série de restrições que devem ser 
@@ -79,7 +79,7 @@ Esta interface uniforme é um ponto muito positivo, pois permite que a comunica�
 componentes da arquitetura seja feita de maneira genérica, o que permite escalar a comunicação 
 entre aplicações.
 
-\section{Otimização multi-objetivo}  
+\section{OTIMIZAÇÃO MULTI-OBJETIVO}  
 Conforme Nos dias de hoje, problemas de otimização buscam um bom resultado.
 Segundo Veloso \cite{veloso} para os problemas de otimização, existem de maneira geral, 
 dois tipos de problemas, os mono-objetivos e os multi-objetivos. 
@@ -91,7 +91,7 @@ difícil de ser encontrada.
 Conforme Ticona \cite{ticona} um problema de otimização multi-objetivo, é representado por um 
 conjunto de funções objetivo que devem ser otimizadas. 
  
-\subsection{Algoritmos Evolucionários}
+\section{ALGORITMOS EVOLUCIONÁRIOS}
 Segundo \cite{ticona}, algoritmos evolucionários (AE) tem sido muito utilizados para problemas de 
 otimização. Um dos motivos do uso deles, é por causa da possibilidade de resolver problemas que 
 envolvam múltiplos objetivos. A abordagem utilizada neste tipo de algoritmo é baseada na 
@@ -105,7 +105,7 @@ Dentro da categoria dos AEs para otimização baseada em multiplos objetivos, ex
 O modelo de utilizado neste trabalho é a de algoritmos genéticos (AG). Esta é uma classe de 
 algoritmos muito utilizada em otimizações multi-objetivo.
 
-\subsection{Algoritmos Genéticos}
+\section{ALGORITMOS GENÉTICOS}
 Existem duas abordagens principais para AGs multi-objetivo. Uma delas utiliza pesos para objetivos 
 únicos. E a outra forma, seleciona um subconjunto de um conjunto de possíveis soluções que não é 
 dominada por nenhuma das outras soluções, este subconjunto é chamado de lista de Pareto, 
@@ -121,7 +121,7 @@ as seguintes condições são atendidas:
 \item A solução \textbf{x} é melhor do que a solução \textbf{y} em algum objetivo
 \end{enumerate}
 
-\section{Trabalhos relacionados}
+\section{TRABALHOS RELACIONADOS}
 Neste capítulo será apresentado o problema em que o OptVM se propoem resolver. 
 Isso será feito através da apresentação de alguns fatos relacionados a nuvens computacionais 
 e como elas costumam ser utilizadas nos dias de hoje.
@@ -163,7 +163,7 @@ um sistema ou serviço gerencie a infraestrutura inteira sozinho, pois sua escal
 poderia se tornar um gargalo. Isso faz com que sejam construidos diferentes serviços e aplicações 
 que se integram e gerenciam a infraesturua.
 
-\subsection{Otimização na escolha do host}
+\subsection{Otimização na escolha de um host}
 Como citado anteriormente uma das partes essenciais na migração de uma VM é a escolha de um destino para ela.
 Para isso, é importante escolher um destino que aloque muito bem a VM e não seja necessário fazer uma outra
 migração logo em seguida. 

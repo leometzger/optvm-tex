@@ -1,4 +1,4 @@
-SOURCE      = main
+SOURCE      = OptVM
 LATEX       = pdflatex
 LATEXMK     = latexmk
 BIBTEX      = bibtex
