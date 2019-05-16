@@ -16,7 +16,7 @@ As restrições no OptVM são pré-definidas, ou seja, não são dinâmicas, e e
 usuário da API. Essa escolha das restrições é feita através das políticas.
 
 Os \textbf{objetivos da otimização}, são interesses do usuário, por exemplo, minimização do consumo de energia. Os objetivos,
-assim como as restrições, são pré-definidos pelo OptVM e o usuário tem a opção de utilizá-los ou não através das políticas.
+assim como as restrições, são pré-definidos pelo OptVM e o usuário tem a opção de utilizá-los ou não. Através das políticas.
 No OptVM, os objetivos são representados com funções objetivo (FO), do problema de otimização. Ou seja, internamente são tratados
 como funções matemáticas que representam o objetivo para a otimização.
 
@@ -93,8 +93,8 @@ também não são elegíveis como um possível destino, então, as restrições 
 os hosts desse determinado datacenter nem devem ser executadas. 
 
 Uma representação visual, de como o algoritmo funcionaria, pode ser vista na Figura \ref{fig:constraintapplyier}. 
-A ideia é que funcione semelhante a uma estrutura de árvore, e que quando um nó pai não atende a restrição, 
-toda a sub-arvore também não atende. E a avaliação é feita top-down.
+A ideia é que funcione semelhante a uma estrutura de árvore, e que quando um nó pai não atende a uma restrição, 
+toda a sub-árvore também não atende. E a avaliação é feita top-down.
 
 \begin{figure}[!htb]
   \centering
