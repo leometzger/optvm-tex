@@ -1,0 +1,81 @@
+This is BibTeX, Version 0.99d (TeX Live 2017)
+Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
+The top-level auxiliary file: OptVM.aux
+A level-1 auxiliary file: estrutura/pre-textuais/dedicatoria.aux
+A level-1 auxiliary file: estrutura/pre-textuais/agradecimentos.aux
+A level-1 auxiliary file: estrutura/pre-textuais/epigrafe.aux
+A level-1 auxiliary file: estrutura/pre-textuais/resumo.aux
+A level-1 auxiliary file: estrutura/pre-textuais/abstract.aux
+A level-1 auxiliary file: estrutura/pre-textuais/sumario.aux
+A level-1 auxiliary file: estrutura/textuais/introducao.aux
+A level-1 auxiliary file: estrutura/textuais/desenvolvimento/revisao-de-literatura.aux
+A level-1 auxiliary file: estrutura/textuais/desenvolvimento/metodologia.aux
+A level-1 auxiliary file: estrutura/textuais/desenvolvimento/desenvolvimento.aux
+A level-1 auxiliary file: estrutura/textuais/desenvolvimento/resultados.aux
+A level-1 auxiliary file: estrutura/textuais/conclusao.aux
+A level-1 auxiliary file: estrutura/pos-textuais/referencias.aux
+The style file: abntex2-alf.bst
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated wiz_functions (elt_size=4) to 9000 items from 6000.
+Database file #1: abntex2-options.bib
+Database file #2: ./base-referencias.bib
+Warning--I didn't find a database entry for "Lecheta"
+Warning--I didn't find a database entry for "Hashimoto"
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated glb_str_ptr (elt_size=4) to 20 items from 10.
+Reallocated global_strs (elt_size=20001) to 20 items from 10.
+Reallocated glb_str_end (elt_size=4) to 20 items from 10.
++---------------------------------------------------------+
+| Estilo bibliográfico abntex2-alf.bst versão v-1.9.6           |
+| Em caso de dúvidas ou problemas com este estilo procure |
+| http://www.abntex.net.br/                               |
++---------------------------------------------------------+
+You've used 12 entries,
+            6714 wiz_defined-function locations,
+            1249 strings with 11024 characters,
+and the built_in function-call counts, 5332 in all, are:
+= -- 421
+> -- 110
+< -- 3
++ -- 90
+- -- 38
+* -- 286
+:= -- 765
+add.period$ -- 18
+call.type$ -- 13
+change.case$ -- 64
+chr.to.int$ -- 19
+cite$ -- 6
+duplicate$ -- 208
+empty$ -- 537
+format.name$ -- 162
+if$ -- 1290
+int.to.chr$ -- 5
+int.to.str$ -- 3
+missing$ -- 158
+newline$ -- 38
+num.names$ -- 30
+pop$ -- 169
+preamble$ -- 1
+purify$ -- 37
+quote$ -- 0
+skip$ -- 499
+stack$ -- 1
+substring$ -- 178
+swap$ -- 53
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 0
+warning$ -- 0
+while$ -- 38
+width$ -- 0
+write$ -- 92
+(There were 2 warnings)

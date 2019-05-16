@@ -1,0 +1,46 @@
+\providecommand{\abntreprintinfo}[1]{%
+ \citeonline{#1}}
+\setlength{\labelsep}{0pt}\begin{thebibliography}{}
+\providecommand{\abntrefinfo}[3]{}
+\providecommand{\abntbstabout}[1]{}
+\abntbstabout{v-1.9.6 }
+
+\bibitem[Brown Simon~Johnston 2002]{brown}
+\abntrefinfo{Brown Simon~Johnston}{BROWN SIMON~JOHNSTON}{2002}
+{BROWN SIMON~JOHNSTON, K.~K. A. Using service-oriented architecture and
+  component based development to build web service applications.
+Rational Software, 2002.}
+
+\bibitem[Eizinger 2017]{eizinger}
+\abntrefinfo{Eizinger}{EIZINGER}{2017}
+{EIZINGER, T. Api design in distributed systems: A comparison between graphql
+  and rest.
+Engineering at the University of Applied Sciences Technikum Wien, 2017.}
+
+\bibitem[Fielding 2000]{fielding}
+\abntrefinfo{Fielding}{FIELDING}{2000}
+{FIELDING, R.~T. Architectural styles and the design of network-based software
+  architectures.
+University of California, 2000.}
+
+\bibitem[Matos 2017]{veloso}
+\abntrefinfo{Matos}{MATOS}{2017}
+{MATOS, A.~V. de. A migração de máquinas virtuais no gerenciamento de
+  recursos em ambientes de nuvens computacionais.
+Universidade Federal do Paraná (UFPR), 2017.}
+
+\bibitem[Ticona 2003]{ticona}
+\abntrefinfo{Ticona}{TICONA}{2003}
+{TICONA, A. C. B.~D. W. G.~C. Algoritmos evolutivos para otimização
+  multi-objetivo.
+Universidade de São Paulo, 2003.}
+
+\bibitem[Valipour Bavar~Amirzafari e Daneshpour 2009]{valipour}
+\abntrefinfo{Valipour Bavar~Amirzafari e Daneshpour}{VALIPOUR BAVAR~AMIRZAFARI;
+  DANESHPOUR}{2009}
+{VALIPOUR BAVAR~AMIRZAFARI, K. N.~M. M.~H.; DANESHPOUR, N. A brief survey of
+  software architecture concepts and service oriented architecture.
+Department of Electrical and Computer Engineering Shahid Rajaee University,
+  2009.}
+
+\end{thebibliography}

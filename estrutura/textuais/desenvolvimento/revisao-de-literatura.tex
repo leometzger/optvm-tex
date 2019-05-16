@@ -41,23 +41,30 @@ SOAP é um protocolo de comunicação baseado em XML(eXtension Markup Language) 
 dos anos 90. Seu objetivo é fazer a comunicação entre o cliente e o servidor através de informações 
 passadas através de um documento XML. O protocolo utiliza um \textit{schema} XML, que é uma 
 maneira de descrever e validar o formato os dados das requisições e respostas. 
-Esse \textit{schema} é utilizado pelo cliente e pelo servidor para saber como interpretar a resposta, 
-no caso de recebimento de mensagem, e formatar a requisição, no caso de envio.
+Esse \textit{schema} é utilizado pelo cliente e pelo servidor para saber como interpretar 
+a resposta, no caso de recebimento de mensagem, e formatar a requisição, no caso de envio.
+Esse \textit{schema} é chamado de WSDL (Web Services Description Language).
 
 O objetivo do SOAP, é expor regras de negócio de aplicação através de serviços. 
 Por esse motivo, o SOAP é uma opção comumente utilizada na construção de aplicações SOA. 
 Outra característica do SOAP, é que ele não precisa ser implementado sobre um protocolo de 
-transporte específico, é possível implementar utilizando outros protocolos, porém, 
-na maioria das vezes é utilizado HTTP.
+transporte específico, e na maioria das vezes é utilizado HTTP, porém é possível implementá-lo
+utilizando outros protocolos. Além do protocolo, o SOAP não restringe a implementação em alguma 
+linguagem de programação específica.
 
-O SOAP algumas vezes é comparado com o REST, pois os dois podem ser utilizados para um objetivo 
+O SOAP é comparado com ao REST, pois os dois podem ser utilizados para um objetivo 
 semelhante, porém, os dois tem um foco diferente, onde o SOAP tem como expor regras de negócio 
 como serviço e o REST visa representar um determinado estado e manipulá-lo através de operações 
 bem definidas.
 
+Segundo \cite{Lecheta} como o SOAP é um grande XML, no contexto dos webservices, ele começou
+a parder espaço para o REST, o qual é mais enxuto e permite enviar informações em formatos mais
+leves, como o JSON por exemplo. Isso é uma grande vantagem, principalmente por estarmos lidando 
+com ambientes onde o tráfego de informações é muito grande.
+
 \section{REPRESENTATIONAL STATE TRANSFER (REST)}
 REST foi formalizado por Fielding \cite{fielding} em sua tese de doutorado, onde ele tem por 
-objetivo apresentar uma arquitetura para criação de sistemas network-based . 
+objetivo apresentar uma arquitetura para criação de sistemas network-based. 
 Na tese, REST é definido como um estilo arquitetural. Ele define uma série de restrições que devem ser 
 respeitadas na criação de um software que é implementado utilizando este estilo arquitetural. 
 As características de um software que utiliza o estilo REST serão apresentadas a seguir, assim 
@@ -90,6 +97,14 @@ difícil de ser encontrada.
 
 Conforme Ticona \cite{ticona} um problema de otimização multi-objetivo, é representado por um 
 conjunto de funções objetivo que devem ser otimizadas. 
+
+Segundo \cite{Hashimoto} num problema multi-objetivo, considera-se um conjunto de 
+variávies, que são chamadas de solução, que busca otimizar mais de uma função objetivo 
+satisfazendo algumas restrições. 
+
+No universo dos algoritmos de otimização multi-objetivo, existem diversos tipos, e nesse trabalho
+será utilizado algoritmos genéticos, os quais fazem parte da classe de algoritmos evolucionários.
+Os mesmos serão descritos a seguir nesse capítulo.
  
 \section{ALGORITMOS EVOLUCIONÁRIOS}
 Segundo \cite{ticona}, algoritmos evolucionários (AE) tem sido muito utilizados para problemas de 
@@ -103,23 +118,10 @@ encontrar aproximações da solução perfeita para problemas difíceis.
 Dentro da categoria dos AEs para otimização baseada em multiplos objetivos, existem diferentes modelos. 
 
 O modelo de utilizado neste trabalho é a de algoritmos genéticos (AG). Esta é uma classe de 
-algoritmos muito utilizada em otimizações multi-objetivo.
+algoritmos muito utilizada em otimizações multi-objetivo. 
 
 \section{ALGORITMOS GENÉTICOS}
-Existem duas abordagens principais para AGs multi-objetivo. Uma delas utiliza pesos para objetivos 
-únicos. E a outra forma, seleciona um subconjunto de um conjunto de possíveis soluções que não é 
-dominada por nenhuma das outras soluções, este subconjunto é chamado de lista de Pareto, 
-também conhecida por soluções Pareto-ótimas.
-
-Nas otimizações multi-objetivo que utilizam soluções pareto-ótimas, usa-se o conceito de 
-dominância de Pareto para  para alcançar soluções que sejam mais  adequadas para determinado problema. 
-Segundo Ticona\cite{ticona}, a dominância de um item \textbf{x} sobre um item \textbf{y} se dá quando 
-as seguintes condições são atendidas:
-
-\begin{enumerate}
-\item A solução \textbf{x} é igualmente ou mais adequada que a solução \textbf{y} em todas as funções objetivo
-\item A solução \textbf{x} é melhor do que a solução \textbf{y} em algum objetivo
-\end{enumerate}
+@TODO
 
 \section{TRABALHOS RELACIONADOS}
 Neste capítulo será apresentado o problema em que o OptVM se propoem resolver. 

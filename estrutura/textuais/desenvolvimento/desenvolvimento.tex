@@ -1,45 +1,51 @@
 \chapter{OPTVM}
 
-O OptVM é um sistema que tem o propósito de dar suporte para a migração de VMs em ambientes de núvem federadas
-através de serviços utilizando o modelo cliente/servidor, mais específicamente o padrão arquitetural 
-Representational State Transfer(REST). 
-O sistema possui dois principais componentes para atingir seu objetivo: 
-um deles, faz uma filtragem de hosts aplicando restrições préviamente escolhidas pelo cliente do serviço e o
-outro define os melhores hosts de destino para migrar uma VM específica 
+O OptVM é um sistema que tem o propósito de dar suporte para a migração de VMs em um ambientes de núvens federadas,
+isso é feito através \textit{webservices} utilizando o modelo cliente/servidor, mais específicamente o padrão arquitetural 
+Representational State Transfer(REST).
+
+O sistema possui dois principais componentes para atingir seu objetivo: um deles, faz uma filtragem de hosts aplicando restrições,
+as quais são escolhidas pelo usuário do \textit{webservice}, e o 
+outro componente define o melhor subconjunto de hosts de destino para migrar uma VM específica 
 baseando-se em objetivos também escolhidos pelo cliente. 
-A escolha dessas restriçoes e objetivos de otimização, foi
-chamada de \textbf{política}. Essa política, após definida, pode ser reutilizada pelo usuário que a criou ou por outros usuários.
+Para a escolha dessas \textbf{restriçoes} e \textbf{objetivos de otimização}, foi dado um nome,
+chamado de \textbf{política}. 
 
-As restrições nada mais são do que regras de negócio que o usuário da API consegue definir através de uma política.
-Existem algumas restrições definidas no OptVM e elas devem ser apenas configuradas pelo usuário da API. Essa "configuração"
-das restrições é feita através das políticas.
+As \textbf{restrições}, nada mais são do que regras de negócio que o usuário da API consegue definir através de uma política.
+As restrições no OptVM são pré-definidas, ou seja, não são dinâmicas, e elas devem ser apenas escolhidas pelo 
+usuário da API. Essa escolha das restrições é feita através das políticas.
 
-E os objetivos da otimização são interesses do usuário, por exemplo, minimização do consumo de energia. Os objetivos,
-assim como as restrições, são definidas pelo OptVM e o usuário tem a opção de utilizá-las.
+Os \textbf{objetivos da otimização}, são interesses do usuário, por exemplo, minimização do consumo de energia. Os objetivos,
+assim como as restrições, são pré-definidos pelo OptVM e o usuário tem a opção de utilizá-los ou não através das políticas.
+No OptVM, os objetivos são representados com funções objetivo (FO), do problema de otimização. Ou seja, internamente são tratados
+como funções matemáticas que representam o objetivo para a otimização.
 
-Por lidar com conhecimentos específicos, como algoritmos de otimização, o OptVM busca ser uma solução caixa preta, onde, o usuário não necessita 
-saber nada sobre o funcionamento interno, algoritmos utilizados, etc. Basta utilizar suas APIs para fazer uso de suas funcionalidades.
-A intenção é que o usuário não precise entender sobre como as coisas são feitas para obter as vantagens do OptVM.
+Por lidar com conhecimentos específicos, como algoritmos de otimização, consumo de energia, entre outras coisas. 
+O OptVM busca ser uma solução caixa preta, onde, o usuário não necessita saber nada sobre o funcionamento interno, 
+algoritmos utilizados, etc. Basta utilizar as \textit{Application Programming Interfaces} (APIs) para fazer uso de suas funcionalidades.
+A intenção é que o usuário não precise entender sobre como as coisas são feitas internamente para obter as vantagens do uso do OptVM.
 
 Neste capítulo, serão apresentados aspectos gerais em relação a implementação e uso do OptVM. 
 No primeiro momento serão mostrados os componentes que integram o sistema. 
-Depois disso, técnicas e ferramentas utilizadas, e no final o funcionamento do serviço. 
+Depois disso, técnicas e ferramentas utilizadas, e no final a ideia do funcionamento do serviço e como ele é
+implementado.
 
 \section{COMPONENTES}
 O OptVM é dividido em dois principais componentes: O aplicador de constraints (\textit{constraint applyier})
 e o otimizador(\textit{optmizer}). Os dois componentes estão relacionados, porém são representados e 
-aplicados separadamente.
+aplicados separadamente. 
 
 \section{APLICADOR DE CONSTRAINTS (CONSTRAINT APPLYIER)}
 
-Para o entendimento de como funciona as o aplicador de restrições, é importante conhecer os tipos
-de restrições e como elas funcionam.
+Como citado na introdução do capítulo, o OptVM utiliza restrições pré-definidddas.
+Para o entendimento de como funciona as o aplicador de restrições, é importante conhecer os tipos de 
+restrições e como elas funcionam.
 
 \subsection{Tipos de restrições (constraints)}
 
-O OptVM disponibiliza algumas restrições pré definidas, para que o usuário do serviço faça uso delas.
-Os tipos de restrições disponibilizadas pelo OptVM operam em 3 níveis, são eles: cloud, datacenter (DC)
-e hosts.
+As restrições pré definidas, tem um \textit{alias} para que o usuário do serviço faça a identificação no uso delas.
+Os tipos de restrições disponibilizadas pelo OptVM operam em 3 níveis, são eles: \textbf{cloud}, \textbf{datacenter} (DC)
+e \textbf{hosts}.
 
 Cada restrição tem uma responsabilidade específica, uma regra de negócio que não deve ser infringida. 
 As restrições disponibilizadas e seus respectivos níveis são as seguintes:
@@ -47,7 +53,7 @@ As restrições disponibilizadas e seus respectivos níveis são as seguintes:
 \begin{enumerate}
   \item Cloud:
   \begin{enumerate}
-    \item Nenhuma
+    \item @TODO
   \end{enumerate}
 
   \item DC:
@@ -74,20 +80,21 @@ O algoritmo que aplica as constraints, consiste em iterar sobre as constraints o
 (operam em nível de cloud), para a menos significativa (operam em nível de host), e remover os itens que não atendem as
 restrições, após cada iteração.
 
+O pseudocódigo do algoritmo é representado da seguinte maneira:
+
+\clearpage
+
+\input{dados/algoritmos/constraint-applyier.tex}
+
 A intenção de aplicar as restrições ordenadas das mais significativas
 para as menos significativas, é para que diminua o número de iterações.
 Pois quando, por exemplo, um datacenter não atende uma restrição, os hosts daquele datacenter 
 também não são elegíveis como um possível destino, então, as restrições em nível de host para
 os hosts desse determinado datacenter nem devem ser executadas. 
 
-O pseudocódigo do algoritmo é representado da seguinte maneira:
-
-\input{dados/algoritmos/constraint-applyier.tex}
-
-Uma representação visual, de como o algoritmo funcionaria, pode ser vista na 
-Figura \ref{fig:constraintapplyier}. A ideia é que funcione semelhante a uma estrutura
-de árvore, e que quando um nó pai não atende a restrição, toda a sub-arvore também não atende.
-E a avaliação é feita top-down.
+Uma representação visual, de como o algoritmo funcionaria, pode ser vista na Figura \ref{fig:constraintapplyier}. 
+A ideia é que funcione semelhante a uma estrutura de árvore, e que quando um nó pai não atende a restrição, 
+toda a sub-arvore também não atende. E a avaliação é feita top-down.
 
 \begin{figure}[!htb]
   \centering
@@ -105,6 +112,8 @@ da VM migrar para determinado host. Na Figura \ref{fig:constraintapplyier}, fora
 \item E os \textbf{Host 07 e Host 12} não atendem alguma restrição em nível de host;
 \item Um caso mais específico é quando o \textbf{Host 12} não atende a alguma restrição, logo o \textbf{DC 07} não terá nenhum host válido, então também deve ser desconsiderado.
 \end{enumerate}
+
+\clearpage
 
 \section{OTIMIZADOR (OPTIMIZER)}
 
@@ -125,7 +134,7 @@ escolhidos, são eles:
 
 \begin{enumerate}
 \item Minimização do consumo de energia;
-\item Minimização de requisições de migração;
+\item Minimização do tempo de instalação;
 \item Minimização da sobrecarga da migração.
 \end{enumerate}
 
@@ -136,20 +145,20 @@ de diversas maneiras, de maneira binária, por inteiros, entre outros tipos de r
 
 Como uma representação representa uma solução para o problema, no OptVM, a 
 representação escolhida foi: um array de booleanos que representa cada host.
-O número, indica a identificação
-de um host em que a \begin{math}VM_{i}\end{math} estaria alocada.
+O valor (\textit{true} ou \textit{false}), se o host está no subconjunto de soluções 
+ou não estaria alocada.
 
 \[
   Solution=
   \left[{\begin{array}{cccccc}
-    4 & 3 & 3 & 2 & 5 & 1 \\
+    0 & 1 & 0 & 0 & 1 & 0 \\
   \end{array}}\right
-  ]  
+  ]
 \]
 
-No exemplo, a \begin{math}VM_{1}\end{math} estaria alocada no \begin{math}Host_{4}\end{math}, a 
-\begin{math}VM_{2}\end{math} e \begin{math}VM_{3}\end{math} no \begin{math}Host_{3}\end{math},
-a quarta no host 5 e assim sucessivamente.
+No exemplo, o tamanho escolhido para o subconjunto é de 2 hosts, ou seja, 
+a otimização busca achar o melhor subconjunto de 2 hosts. Nesta representação,
+os 2 hosts escolhidos na solução, são os hosts 1 e 5 do conjunto de hosts.
 
 \section{COMUNICAÇÃO}
 Em termos gerais, uma API é uma interface de software que pode ser chamada e executada \cite{eizinger}. 
@@ -182,8 +191,6 @@ O padrão REST, definido por Fielding \cite{fielding}, sugere que se deve criar 
 Essa interface é representada através de recursos, e a interação com esses recursos é feita através de requisições HTTP, 
 as quais contém verbos, o corpo da mensagem, cabeçalhos, entre outras informações. Além disso, o padrão arquitetural também sugere que 
 haja links para verificar outras informações e tomar ações sobre os recursos, chamado HATEOAS.
-
-Como
 
 \subsection{Recursos}
 
@@ -227,10 +234,11 @@ Apesar do caso de uso básico, é possível utilizar a API de maneiras diferente
 e fazer as combinações que forem mais úteis para o usuário.
 
 A criação de uma política, é feita enviando os objetivos e as restrições.
-Após criada a política, a mesma pode ser utilizada em uma otimização. Através da
-associação do \textbf{id} com a otimização.
+Após criada a política, a mesma pode ser utilizada em uma otimização. 
 
 \input{dados/figuras/request-response-optvm.tex}
+
+Após a criação de um política, é possível usá-la para fazer otimizações.
 
 A criação de uma otimização, retorna um objeto com um resumo dos melhores hosts
 e sua identificação, para melhorar o destino da VM.
@@ -239,7 +247,6 @@ como detalhes da otimização através da URI \textit{/details}.
 
 Um exemplo de \textit{payload} que a criação de uma optimização teria é o seguinte:
 
-\newpage
 \begin{lstlisting}[language=json,firstnumber=1]
 {
   "id": 1,
@@ -271,6 +278,8 @@ Um exemplo de \textit{payload} que a criação de uma optimização teria é o s
   ]
 }
 \end{lstlisting}
+
+E a resposta poderia ter o seguinte formato:
 
 \begin{lstlisting}[language=json,firstnumber=1]
 {
