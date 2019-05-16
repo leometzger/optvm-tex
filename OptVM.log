@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2018.8.14)  7 MAY 2019 20:53
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2018.8.14)  16 MAY 2019 14:24
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1847,7 +1847,7 @@ Here is how much of TeX's memory you used:
  1143 hyphenation exceptions out of 8191
  65i,14n,56p,490b,6271s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/bera/fvmr8a.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/bera/fvsb8a.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/bera/fvsr8a.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/bera/fvsro8a.pfb>
-Output written on /Users/leometzger/Documents/tcc/optvm-latex/OptVM.pdf (25 pages, 176081 bytes).
+Output written on /Users/leometzger/Documents/tcc/optvm-latex/OptVM.pdf (25 pages, 176080 bytes).
 PDF statistics:
  470 PDF objects out of 1000 (max. 8388607)
  428 compressed objects within 5 object streams
