@@ -2,39 +2,57 @@
 \label{chap:introducao}
 
 Com a evolução da computação em nuvem, surgiram necessidades cada vez maiores de utilizar ao 
-máximo o poder dos computadores sem sobrecarregá-los. Estas necessidades surgem para atender 
-requisitos de diminuição de custos, aumento de desempenho, entre outros objetivos que fazem com que 
-usuários de computação em nuvem e empresas que usam este tipo de serviço obtenham vantagem no uso dela.
+máximo o poder dos computadores sem sobrecarregar os mesmos, e os componentes que o fazem funcionar,
+como o uso de energia. Estas necessidades surgem para atender 
+requisitos de diminuição de custos, aumento de desempenho, diminuição no consumo de energia,
+entre outros objetivos que fazem com que usuários de computação em nuvem e empresas que usam 
+este tipo de serviço obtenham vantagem no uso dela.
 
 Para isso, é muito comum que para otimizar o uso dos computadores de um ambiente em nuvem, 
 os provedores utilizem o mecanismo de virtualização. Hoje, os \textit{datacenters} são compostos 
-por máquinas físicas(FMs) e máquinas virtuais(VMs), sendo que, cada FM normalmente possui 
-pelo menos uma ou mais VMs. Essa utilização das VMs permite que seja construído um ambiente flexível.
+por máquinas físicas(PMs) e máquinas virtuais(VMs), sendo que, cada PM normalmente possui 
+pelo menos uma ou mais VMs. Essa utilização das VMs permite que seja construído um ambiente flexível
+em relação a organização e quantidade de VM por Hosts em cada \textit{datacenter}.
 
-Em um cenário que o ambiente em que temos a possibilidade de utilizar as FMs como host de múltiplas VMs,
- é possível que as VMs da nuvem sejam organizadas de diferentes maneiras em relação as FMs para que atinjam 
- os objetivos dos interessados. Os objetivos podem ser os mais variados. Por exemplo, uma empresa que 
+Em um cenário que o ambiente em que temos a possibilidade de utilizar as PMs como host de múltiplas VMs,
+é possível que as VMs da nuvem sejam organizadas de diferentes maneiras em relação as PMs. A decisão
+de organizar a núvem de uma maneira ou de outra, envolvem os objetivos de quem está gerenciando a núvem. 
+ 
+ Os objetivos podem ser os mais variados. Por exemplo, uma empresa que 
  use o serviço da nuvem pode querer ter um alto desempenho, assim como pode querer ter o menor custo 
- possível. Por esse motivo, existem pesquisas que buscam maneiras de otimizar esses objetivos e buscar 
- uma forma de resolver este tipo problema, o qual é chamado otimização baseado em múltiplos objetivos. 
+ possível. Por esse motivo, existem pesquisas que buscam maneiras de melhorar a alocação e realocação de VMs,
+ e uma das formas de resolver este tipo problema, é utilizar a otimização multiobjetivo (MOO). 
 
 A migração de uma VM envolve algumas etapas, como, a descoberta da necessidade de migração, 
 a escolha de uma VM a ser migrada e a escolha de um host de destino para essa VM.
- A etapa em que este trabalho está interessado é a escolha de um host de destino para a VM. 
- Considerando que uma migração seja considerada cara do ponto de vista computacional. 
- O momento da migração deve ser bem escolhido para evitar que a própria migração não incorra em 
- prejuízos. Assim como o momento da migração é importante, a escolha de um destino também é, 
- pois o host selecionado tem que atender os objetivos e restrições que a VM necessita, para que 
- não haja a sobrecarga do host de destino e implique em uma nova migração.
+A etapa em que este trabalho está interessado é a escolha de um host de destino para a VM. 
+Considerando que uma migração seja considerada cara do ponto de vista computacional, 
+o momento da migração deve ser bem escolhido para evitar que a migração da VM feita não gere  
+prejuízos ou problemas maiores do que a própria sobrecarga do host. 
+Assim como o momento da migração é importante, a escolha de um destino também é, 
+pois o host selecionado tem que melhorar a maneira em que os hosts estão organizados naquele determinado momento, 
+para que não haja novas migrações por conta da migração inicial.
 
-O trabalho tem papel de servir como apoio para a migração de VMs em ambientes de computação em nuvem. 
-O trabalho faz uso de uma abordagem em que um usuário, que precise migrar uma VM, possa 
+Este trabalho tem papel de servir como apoio para a migração de VMs em ambientes de computação em nuvem. 
+Isto é feito através de uma abordagem em que um gerenciador de núvem, que precise migrar uma VM, possa 
 utilizar um serviço que selecionará as melhores opções de host para fazer a migração de uma VM. 
-O serviço possui uma abordagem que utiliza algoritmos que fazem a seleção do host baseado em múltiplos objetivos.
- Contudo, o serviço é uma caixa preta, esta característica traz uma grande vantagem, o usuário não precisa conhecer nada 
- sobre os algoritmos utilizados, precisa apenas utilizar a interface que é definida pelo serviço. 
+O serviço possui uma abordagem que utiliza algoritmos que fazem uma seleção dos melhores hosts baseando-se 
+nos objetivos do consumidor do serviço. Contudo, o serviço é uma solução caixa preta, esta característica 
+traz uma grande vantagem, o usuário não precisa conhecer nada sobre os algoritmos utilizados, 
+precisa apenas utilizar a interface que é definida pelo serviço. A interface do serviço é construida
+em cima de \textit{webservices}, utilizando padrões bem conhecidos para facilitar a integração dos gerenciadores
+das núvens computacionais.
+
+Este trabalho apresenta uma aplicação prática da construção de um \textit{webservice} utilizando padrões bem conhecidos
+na indústria. Além do \textit{webservice}, o trabalho também apresenta uma aplicação de algoritmos de otimização multiobjetivo
+para um problema que existe hoje. Também são feitos testes e gerados métricas para a avaliação dos resultados.
 
 \section{ORGANIZAÇÃO DO TRABALHO}
 \label{sec:organizacaoTrabalho}
 
-@TODO
+O trabalho está organizado em seis capítulos. O primeiro, destina-se a dar uma introdução do problema e forma de resolvê-lo
+Já o segundo capítulo, irá dar o embasamento teórico necessário para o entendimento dos demais capítulos.
+O terceiro destina-se a metodologia utilizada para o desenvolvimento do trabalho. No quarto serão apresentados
+aspectos da implementação da solução para o problema encontrado. Os resultados obtidos com a implementação
+apresentada no capítulo quarto serão feitas no capítulo cinco. E por último as conclusões que foram obtidas
+na realização do trabalho.

@@ -2,10 +2,32 @@
 \label{chap:fundamentacaoTeorica}
 
 Neste capítulo, são apresentados alguns conceitos e termos utilizados no decorrer do trabalho. 
-Estes, também darão base para compreender a escolha das técnicas utilizadas. 
-Os conceitos são relacionados a construção do sistema. 
-Os conceitos estão relacionados a otimização multiobjetivo e comunicação cliente-servidor (CS), 
-que são os dois pilares do sistema que será desenvolvido.
+Os conceitos apresentados tem relação com a construção do sistema. São apresentadas as 
+técnicas, arquiteturas e algoritmos disponíveis para solução do problema, assim como as utilizadas no 
+desenvolvimento da solução.
+
+As primeiras seções do capítulo abordam os padrões e protocolos disponíveis na literatura que são 
+utilizados na construção de \textit{webservices}.  Esses padrões e protocolos 
+são conhecidos por facilitar e flexibilizar a integração de sistemas. 
+Entre eles destacam-se o \textit{Service Oriented Architecture} (SOA), que é
+uma arquitetura que trata os serviços como componentes e visa utilizar 
+esses componentes para resolver problemas de negócios complexos através de composição
+de serviços. \textit{Representational State Transfer} (REST), que é um estilo arquitetural 
+que pode ser utilizado, ou não, para a criação de serviços SOA. O \textit{Simple Object Access Protocol}
+(SOAP), que é um protocolo que muitas vezes é comparado ao REST por também servir
+para a criação de serviços SOA.
+
+Além disso, nas seções posteriores, o capítulo também apresenta algoritmos que ajudam a 
+resolver o problema da seleção de host para migração de VM através de otimização multiobjetivo (MOO). 
+Existem vários algoritmos que podem ser utilizados para a resolução desse tipo de problema. 
+Neste trabalho, são abordados os algoritmos genéticos (GAs), que fazem parte de um grupo 
+maior de algoritmos, chamado algoritmos evolucionários (EAs). 
+O conceito de EA também será abordado neste capítulo.
+
+Nas primeiras quatro seções, as ferramentas apresentadas 
+estão relacionadas em como é feita a comunicação e disponibilização do serviço. 
+E as outras seções estão relacionados ao funcionamento interno, em como solucionar
+a seleção dos melhores hosts.
 
 \section{SERVICE ORIENTED ARCHITECTURE (SOA)}
 O desenvolvimento de software para um ambiente corporativo é uma tarefa complexa. 
@@ -36,31 +58,17 @@ Como SOA não limita a estratégia utilizada para o desenvolvimento do mesmo, po
 técnica para implementá-lo. No ambiente corporativo, os serviços comumente são implementados 
 utilizando web services SOAP, REST ou chamadas RPCs.
 
-\section{SIMPLE OBJECT ACCESS PROTOCOL (SOAP)}
-SOAP é um protocolo de comunicação baseado em XML(eXtension Markup Language) que foi criado no final 
-dos anos 90. Seu objetivo é fazer a comunicação entre o cliente e o servidor através de informações 
-passadas através de um documento XML. O protocolo utiliza um \textit{schema} XML, que é uma 
-maneira de descrever e validar o formato os dados das requisições e respostas. 
-Esse \textit{schema} é utilizado pelo cliente e pelo servidor para saber como interpretar 
-a resposta, no caso de recebimento de mensagem, e formatar a requisição, no caso de envio.
-Esse \textit{schema} é chamado de WSDL (Web Services Description Language).
+\subsection{Enterprise Service Bus (ESB)}
 
-O objetivo do SOAP, é expor regras de negócio de aplicação através de serviços. 
-Por esse motivo, o SOAP é uma opção comumente utilizada na construção de aplicações SOA. 
-Outra característica do SOAP, é que ele não precisa ser implementado sobre um protocolo de 
-transporte específico, e na maioria das vezes é utilizado HTTP, porém é possível implementá-lo
-utilizando outros protocolos. Além do protocolo, o SOAP não restringe a implementação em alguma 
-linguagem de programação específica.
+Para obter essa flexibilidade na construção dos serviços, o é comum o SOA utilizar
+uma camada que recebe a chamada dos serviços e encaminha para o serviço correto.
+Essa camada, além da responsabilidade enfileirar as mensagens enviadas aos serviços,
+também faz a tradução da comunicação, caso um serviço trabalhe somente com SOAP e outro somente
+com REST.
 
-O SOAP é comparado com ao REST, pois os dois podem ser utilizados para um objetivo 
-semelhante, porém, os dois tem um foco diferente, onde o SOAP tem como expor regras de negócio 
-como serviço e o REST visa representar um determinado estado e manipulá-lo através de operações 
-bem definidas.
+A arquitetura utilizando SOA fica semelhante a da imagem.
 
-Segundo \cite{Lecheta} como o SOAP é um grande XML, no contexto dos webservices, ele começou
-a parder espaço para o REST, o qual é mais enxuto e permite enviar informações em formatos mais
-leves, como o JSON por exemplo. Isso é uma grande vantagem, principalmente por estarmos lidando 
-com ambientes onde o tráfego de informações é muito grande.
+@TODO MOntar a imagem do SOA
 
 \section{REPRESENTATIONAL STATE TRANSFER (REST)}
 REST foi formalizado por Fielding \cite{fielding} em sua tese de doutorado, onde ele tem por 
@@ -76,9 +84,7 @@ de clientes do serviço implementado. Além disso, essa separação também perm
 façam uso do serviço REST. Do ponto de vista de arquitetura de software, isto é muito importante, 
 pois permite que componentes fiquem bem modularizados.
 
-Outra característica que o estilo arquitetural tem, é que o serviços devem ser stateless, ou seja, as  
-requisições devem ser auto-contidas, não podem assumir algum estado ou contexto que o servidor tenha 
-previamente armazenado. 
+@TODO Reescrever de maneira melhor Este parágrafo
 
 Fielding \cite{fielding} destaca que uma das características centrais do REST, e o que difere ele 
 de outros estilos arquiteturais, é a utilização de uma interface uniforme entre os componentes. 
@@ -86,7 +92,37 @@ Esta interface uniforme é um ponto muito positivo, pois permite que a comunica�
 componentes da arquitetura seja feita de maneira genérica, o que permite escalar a comunicação 
 entre aplicações.
 
-\section{OTIMIZAÇÃO MULTI-OBJETIVO}  
+\section{SIMPLE OBJECT ACCESS PROTOCOL (SOAP)}
+SOAP é um protocolo de comunicação baseado em XML(eXtension Markup Language) que foi criado no final 
+dos anos 90. Seu objetivo é fazer a comunicação entre o cliente e o servidor através de informações 
+passadas através de um documento XML. O protocolo utiliza um \textit{schema} XML, que é uma 
+maneira de descrever e validar o formato os dados das requisições e respostas. 
+Esse \textit{schema} é utilizado pelo cliente e pelo servidor para saber como interpretar 
+a resposta, no caso de recebimento de mensagem, e formatar a requisição, no caso de envio.
+Esse \textit{schema} é chamado de WSDL (Web Services Description Language).
+
+O objetivo do SOAP, é expor regras de negócio de aplicação através de serviços. 
+Por esse motivo, o SOAP é uma opção comumente utilizada na construção de aplicações SOA. 
+Outra característica do SOAP, é que ele não precisa ser implementado sobre um protocolo de 
+transporte específico, e na maioria das vezes é utilizado HTTP, porém é possível implementá-lo
+utilizando outros protocolos. Além do SOAP permitir utilizar outro protocolo, 
+ele não restringe a implementação em alguma linguagem de programação específica, ou seja,
+é possível implementá-lo em qualquer linguagem de programação.
+
+O SOAP é comparado com ao REST, pois os dois podem ser utilizados para um objetivo 
+semelhante, porém, os dois tem um foco diferente, onde o SOAP tem como objetivo expor regras de negócio 
+como serviço, e o REST visa representar um determinado estado e manipulá-lo através de operações 
+bem definidas.
+
+Segundo \cite{lecheta} como o SOAP é um grande XML, no contexto dos webservices, ele começou
+a parder espaço para o REST, o qual é mais simples 
+e permite enviar informações em formatos mais leves, como o JSON por exemplo. 
+Isso é uma grande vantagem, principalmente por ser um problema
+que tem o potencial de ter quantidade de dados trafegando em larga escala.
+
+@TODO Adicionar comparação com o REST
+
+\section{OTIMIZAÇÃO MULTI-OBJETIVO (MOO)}  
 Conforme Nos dias de hoje, problemas de otimização buscam um bom resultado.
 Segundo Veloso \cite{veloso} para os problemas de otimização, existem de maneira geral, 
 dois tipos de problemas, os mono-objetivos e os multi-objetivos. 
@@ -106,7 +142,7 @@ No universo dos algoritmos de otimização multi-objetivo, existem diversos tipo
 será utilizado algoritmos genéticos, os quais fazem parte da classe de algoritmos evolucionários.
 Os mesmos serão descritos a seguir nesse capítulo.
  
-\section{ALGORITMOS EVOLUCIONÁRIOS}
+\section{ALGORITMOS EVOLUCIONÁRIOS (EA)}
 Segundo \cite{ticona}, algoritmos evolucionários (AE) tem sido muito utilizados para problemas de 
 otimização. Um dos motivos do uso deles, é por causa da possibilidade de resolver problemas que 
 envolvam múltiplos objetivos. A abordagem utilizada neste tipo de algoritmo é baseada na 
@@ -120,7 +156,7 @@ Dentro da categoria dos AEs para otimização baseada em multiplos objetivos, ex
 O modelo de utilizado neste trabalho é a de algoritmos genéticos (AG). Esta é uma classe de 
 algoritmos muito utilizada em otimizações multi-objetivo. 
 
-\section{ALGORITMOS GENÉTICOS}
+\section{ALGORITMOS GENÉTICOS (GA)}
 @TODO
 
 \section{TRABALHOS RELACIONADOS}
