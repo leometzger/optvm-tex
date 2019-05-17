@@ -68,29 +68,77 @@ com REST.
 
 A arquitetura utilizando SOA fica semelhante a da imagem.
 
-@TODO MOntar a imagem do SOA
+@TODO Montar a imagem do SOA
 
 \section{REPRESENTATIONAL STATE TRANSFER (REST)}
 REST foi formalizado por Fielding \cite{fielding} em sua tese de doutorado, onde ele tem por 
 objetivo apresentar uma arquitetura para criação de sistemas network-based. 
-Na tese, REST é definido como um estilo arquitetural. Ele define uma série de restrições que devem ser 
-respeitadas na criação de um software que é implementado utilizando este estilo arquitetural. 
-As características de um software que utiliza o estilo REST serão apresentadas a seguir, assim 
-como algumas de suas vantagens de desvantagens.
+Na tese, REST é definido como um estilo arquitetural. Fielding também define seis restrições que 
+devem ser respeitadas na criação de um software que é implementado utilizando este estilo arquitetural. 
 
-Uma das principais características é que o REST é implementado utilizando o modelo de comunicação 
-cliente-servidor. Isso ajuda com a separação de responsabilidades, e permite que uma portabilidade 
-de clientes do serviço implementado. Além disso, essa separação também permite que outros serviços 
-façam uso do serviço REST. Do ponto de vista de arquitetura de software, isto é muito importante, 
-pois permite que componentes fiquem bem modularizados.
 
-@TODO Reescrever de maneira melhor Este parágrafo
+
+As restrições definidas por Fielding, ou seja, as restrições que um sistema
+deve atender quando se está utilizando REST podem ser atendidas em sua totalidade
+ou não, isso depede do nível de maturidade da API. Uma API que não atende todas as restrições
+não está deixando de utilizar REST, apenas o utiliza com um nível de maturidade
+menor. As seis restrições são:
+
+\begin{enumerate}
+  \item Interface uniforme
+  \item \textit{Stateless}
+  \item Cacheável
+  \item Cliente-servidor
+  \item Sistema em camadas
+  \item Código por demanda (Opcional)
+\end{enumerate}
+
+\subsection{Interface Uniforme}
 
 Fielding \cite{fielding} destaca que uma das características centrais do REST, e o que difere ele 
 de outros estilos arquiteturais, é a utilização de uma interface uniforme entre os componentes. 
-Esta interface uniforme é um ponto muito positivo, pois permite que a comunicação entre os 
-componentes da arquitetura seja feita de maneira genérica, o que permite escalar a comunicação 
-entre aplicações.
+Esta interface uniforme define a forma com que o cliente e o servidor se comunicam. Segundo \cite{todd}
+isto desacopla e simplifica a arquitetura.
+
+Segundo \cite{todd} além disso, essa interface, é uniforme quando segue as seguintes características:
+
+\begin{enumerate}
+  \item Baseada em recurso
+  \item Manipula os recursos através de representações
+  \item Possui mensagens autodescritivas
+  \item \textit{Hypermedia as the Engine of Application State} (HATEOAS)
+\end{enumerate}
+
+Ser \textbf{baseada em recursos}, significa que a interface deve separar seus
+recursos através de \textit{Universal Resource Identifiers}(URIs). 
+Cada recurso possui alguma URI que serve como \textit{endpoint} para interação com o usuário. 
+Essa URI é utilizada para fazer a \textbf{manipulação dos recursos utilizando representações}.
+As representações de um recursos podem ter diversos formatos, como por exemplo 
+\textit{JavaScript Object Notation} (JSON) ou \textit{eXtensible Markup Language}(XML).
+
+\textbf{Mensagens autodescritivas} significa que na requisição feita pelo cliente para
+o servidor, devem ser incluidas informações sobre o que deve ser feito com o recurso
+que se está utilizando. Por exemplo, deve ser incluido o formato que está sendo feita a
+comunicação (XML, JSON), o que está querendo modificar naquele recurso (atualizar, deletar, etc.).
+Além dessas informações, que são enviadas pelo cliente, as mensagens de resposta também devem 
+ser autodescritivas, contendo informações sobre a resposta, por exemplo, se o recurso pode ser
+cacheado e por quanto tempo.
+
+O \textbf{HATEOAS} é utilizado apenas por APIs que tenham um nível de maturidade 
+maior. 
+
+
+\subsection{Stateless}
+\subsection{Cacheável}
+\subsection{Sistemas em camadas}
+\subsection{Código por demanda}
+\subsection{Cliente-servidor}
+
+REST é implementado utilizando o modelo de comunicação cliente-servidor. 
+Isso ajuda com a separação de responsabilidades, e permite que uma portabilidade 
+de clientes do serviço implementado. O REST permite uma reutilização do serviço. 
+Do ponto de vista de arquitetura de software, isto é muito importante, pois permite 
+que componentes fiquem bem modularizados.
 
 \section{SIMPLE OBJECT ACCESS PROTOCOL (SOAP)}
 SOAP é um protocolo de comunicação baseado em XML(eXtension Markup Language) que foi criado no final 
