@@ -1,0 +1,16 @@
+\begin{table}[!htb]
+    \centering
+    \caption[REST vs. SOAP]{Tabela comparativa REST vs. SOAP
+    \label{tab:rest-vs-soap}}
+    \begin{tabular}{rrrrr}
+        \toprule
+            Comparação & \textbf{SOAP} & \textbf{REST} \\
+        \midrule
+            \textbf{Design} & Protocolo bem definido com regras para seguir & Estilo arquitetural com diretrizes e recomendações\\
+            \textbf{Formato de Mensagens} & Somente \textbf{XML} & Vários formatos, como \textbf{XML}, \textbf{JSON}, \textbf{HTML}, etc. \\
+            \textbf{Abordagem} & Guiado por funções, mais ligadas ao negócio, por exemplo (getUser, proccessOrder) & Guiado por dados, os dados ficam disponíveis através de recursos, por exemplo (users) \\
+            \textbf{Protocolo de comunicação} & Qualquer protocolo (UDP, HTTP, TCP/IP) & Apenas HTTP \\
+            \textbf{Cache} & Não é possível fazer cache & É possível fazer cache \\
+        \bottomrule
+    \end{tabular}
+\end{table}
