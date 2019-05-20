@@ -119,7 +119,7 @@
 
 \setlength{\parindent}{1.5cm}
 
-\setlength{\parskip}{0.0cm}
+\setlength{\parskip}{0cm}
 
 \renewcommand{\ABNTEXchapterfont}{\normalfont\bfseries}
 \renewcommand{\ABNTEXchapterfontsize}{\normalsize}

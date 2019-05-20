@@ -76,10 +76,24 @@ objetivo apresentar uma arquitetura para criação de sistemas network-based.
 Na tese, REST é definido como um estilo arquitetural. Fielding também define seis restrições que 
 devem ser respeitadas na criação de um software que é implementado utilizando este estilo arquitetural. 
 
+A comunicação no REST, é feita via \textit{Hypertext Trasfer Protocol} (HTTP). Desta meneira
+a comunicação cliente-servidor é feita utilizando as funcionalidades que o protocolo suporta,
+como: a utilização de cabeçalhos, \textit{query-strings}, \textit{Universal Resource Identifiers}(URIs),
+entre outros recursos do protocolo. Como foco deste trabalho é o estilo arquitetural REST, 
+o mesmo não contempla detalhes sobre o funcionamento deste protocolo, apenas a utilização dele.
 
+\begin{figure}[!htb]
+  \centering
+  \caption{REST sobre HTTP simples}
+  \includegraphics[width=1\textwidth]{./dados/figuras/rest-1.png}
+  \label{fig:rest1}
+\end{figure}
 
-As restrições definidas por Fielding, ou seja, as restrições que um sistema
-deve atender quando se está utilizando REST podem ser atendidas em sua totalidade
+Neste capítulo será apresentado as seis restrições que são definidas por Fielding
+que um sistema deve atender quando REST é utilizado e a maneira de utilização dos
+verbos HTTP no padrão arquitetural. 
+
+As restrições, podem ser atendidas em sua totalidade
 ou não, isso depede do nível de maturidade da API. Uma API que não atende todas as restrições
 não está deixando de utilizar REST, apenas o utiliza com um nível de maturidade
 menor. As seis restrições são:
@@ -110,7 +124,7 @@ Segundo \cite{todd} além disso, essa interface, é uniforme quando segue as seg
 \end{enumerate}
 
 Ser \textbf{baseada em recursos}, significa que a interface deve separar seus
-recursos através de \textit{Universal Resource Identifiers}(URIs). 
+recursos através de URIs. 
 Cada recurso possui alguma URI que serve como \textit{endpoint} para interação com o usuário. 
 Essa URI é utilizada para fazer a \textbf{manipulação dos recursos utilizando representações}.
 As representações de um recursos podem ter diversos formatos, como por exemplo 
@@ -124,14 +138,20 @@ Além dessas informações, que são enviadas pelo cliente, as mensagens de resp
 ser autodescritivas, contendo informações sobre a resposta, por exemplo, se o recurso pode ser
 cacheado e por quanto tempo.
 
-O \textbf{HATEOAS} é utilizado apenas por APIs que tenham um nível de maturidade 
-maior. 
+Segundo \cite{todd} \textbf{HATEOAS} significa clientes entregar estado via conteúdo no corpo
+da mensagem, \textit{query-strings}, cabeçalhos e URIs. E o servidor retornar estados
+através de \textit{status-codes}, conteúdo no corpo da mensagem e meta-informações através
+de cabeçalhos. Seguindo essas regras, a comunicação é considerada comunicação via \textbf{hyperteto}.
+Além disso, também significa enviar a relação entre recursos quando necessário. Isso pode
+ser feito através de links contidos nos corpos da mensagem ou cabeçalhos da requisição.
 
+\begin{figure}[!htb]
+  \centering
+  \caption{Recursos REST}
+  \includegraphics[width=1\textwidth]{./dados/figuras/rest-2.png}
+  \label{fig:rest2}
+\end{figure}
 
-\subsection{Stateless}
-\subsection{Cacheável}
-\subsection{Sistemas em camadas}
-\subsection{Código por demanda}
 \subsection{Cliente-servidor}
 
 REST é implementado utilizando o modelo de comunicação cliente-servidor. 
@@ -139,6 +159,43 @@ Isso ajuda com a separação de responsabilidades, e permite que uma portabilida
 de clientes do serviço implementado. O REST permite uma reutilização do serviço. 
 Do ponto de vista de arquitetura de software, isto é muito importante, pois permite 
 que componentes fiquem bem modularizados.
+
+\subsection{Stateless}
+
+No REST, é necessário que a aplicação seja \textit{Stateless}, ou seja, as requisições
+devem ser autocontidas. Isso significa que as requisições de usuários devem conter todas
+as informações necesárias para o servidor entender e processar a requisição. Não deve-se
+assumir que o cliente da API utilize-a de uma forma específica para a requisição funcionar.
+
+\subsection{Cacheável}
+
+Essa é uma característica que faz com que aumente o desempenho da aplicação. Deve ser
+possível fazer cache de informações. Isso faz com que gere menos comunicação entre
+cliente e servidor. O \textit{cache} pode ser feito de maneira implicita (o cliente
+define quando cachear) e de maneira explícita (o servidor indica que a requisição pode
+ser cacheada).
+
+\subsection{Sistemas em camadas}
+
+Deve ser possível adicionar camadas(\textit{middlewares}) na utilização do REST.
+Essas camadas podem ter diversas finalidades, como, por exemplo, aumento de performance
+através de \textit{load-balance}, aumento de segurança (autenticação), entre outros.
+
+\subsection{Código por demanda (Opcional)}
+
+Esta restrição é opcional e pouco utilizada. Segundo \cite{todd} é uma maneira de
+extender a funcionalidade através de envio de código para ser executado pelo cliente.
+Esta restrição deve ser aplicada apenas quando não viole outras restrições.
+
+\subsection{Verbos HTTP}
+
+Além dos itens citados nas seções anteriores, outra parte importante no REST,
+para a uniformidade da interface, são os \textbf{verbos http}. Os verbos
+HTTP representam a ação que o usuário da API está querendo tomar através da
+requisição enviada. Isso é muito importante, pois da um contexto para cada
+tipo de requisição da API.
+
+\input{dados/tabelas/verbos-http.tex}
 
 \section{SIMPLE OBJECT ACCESS PROTOCOL (SOAP)}
 SOAP é um protocolo de comunicação baseado em XML(eXtension Markup Language) que foi criado no final 
@@ -168,10 +225,8 @@ e permite enviar informações em formatos mais leves, como o JSON por exemplo.
 Isso é uma grande vantagem, principalmente por ser um problema
 que tem o potencial de ter quantidade de dados trafegando em larga escala.
 
-@TODO Adicionar comparação com o REST
-
 \section{OTIMIZAÇÃO MULTI-OBJETIVO (MOO)}  
-Conforme Nos dias de hoje, problemas de otimização buscam um bom resultado.
+Problemas de otimização buscam, de alguma maneira, um bom resultado para a execução de alguma tarefa.
 Segundo Veloso \cite{veloso} para os problemas de otimização, existem de maneira geral, 
 dois tipos de problemas, os mono-objetivos e os multi-objetivos. 
 Os mono-objetivos buscam otimizar uma solução baseando-se em um único objetivo, por consequência, 
