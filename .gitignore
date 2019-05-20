@@ -1,2 +1,14 @@
 .DS_STORE
 __latexindent_temp.tex
+*.aux
+*.log
+*.toc
+*.fls
+*.bbl
+*.blg
+*.brf
+*.fdb_latexmk
+*.ilg
+*.idx
+*.ind
+*.synctex.gz
