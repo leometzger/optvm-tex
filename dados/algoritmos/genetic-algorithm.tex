@@ -1,0 +1,16 @@
+\begin{algorithm}
+    \caption{Algoritmo Genético}
+    \KwIn{Um problema de otimização com função objetivo $f$ \newline Parâmetros do GA}
+    \KwOut{Pfinal (população final de soluções)} 
+
+    $j = 1$
+    Gerar a população inicial $Pj$
+    Avaliar a aptidão das soluções em $Pj$ empregando $f$
+    \While {$Critério de parada não satsfeito$ faça}  
+      Aplicar o operador de seleção em $Pj$
+      Gerar a nova população $Pj+1$ utilizando os operadores de recombinação e mutação.
+      j=j+1
+      Avaliar a aptidão das soluções em Pj empregando f
+    \end
+    $Pfinal = Pj$
+\end{algorithm}

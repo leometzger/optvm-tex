@@ -171,10 +171,19 @@ No exemplo, o tamanho escolhido para o subconjunto é de 2 hosts, ou seja,
 a otimização busca achar o melhor subconjunto de 2 hosts dentre os N disponíveis. 
 No exemplo, os 2 hosts escolhidos na solução, são os hosts 1 e 4 do conjunto de N hosts.
 
-\subsection{NSGAII}
+\section{FUNÇÕES OBJETIVO (OFs)}
+Como citado na seção anterior, são disponibilizadas três OFs e que internamente, o OptVM
+utiliza funções matemáticas para a representação das OFs. Nesta seção será demonstradas e
+explicadas as funções utilizadas pelo OptVM.
 
-@TODO (Se for usado o NSGAII mesmo, explicar aqui como ele funciona)
+\subsection{Minimização do consumo de energia}
+@TODO - Irei adicionar a explicação e a função matemática
 
+\subsection{Minimização do tempo de instalação}
+@TODO - Irei adicionar a explicação e a função matemática
+
+\subsection{Minimização da sobrecarga da migração}
+@TODO - Irei adicionar a explicação e a função matemática
 
 \section{COMUNICAÇÃO}
 Em termos gerais, uma API é uma interface de software que pode ser chamada e executada \cite{eizinger}. 
@@ -283,15 +292,28 @@ para fazer uma otimização, é seguido o seguinte fluxo:
  \item Obtenção do subconjunto de hosts otimização.
 \end{enumerate}
 
+\input{dados/figuras/request-response-optvm.tex}
+
 Apesar do caso de uso básico, é possível utilizar a API de maneiras diferentes,
 e fazer as combinações que forem mais úteis para o usuário. Por exemplo, é possível
 criar uma otimização sem uma política, para este caso, serão adotados valores
 padrões para os parâmetros obrigatórios da política e todos os objetivos na otimização.
 
 A criação de uma política, é feita enviando os objetivos e as restrições.
-Após criada a política, a mesma pode ser utilizada em uma otimização. 
+Após criada a política, a mesma pode ser utilizada em uma otimização. Para a 
+criação da política, pode ser utilizado o seguinte formato:
 
-\input{dados/figuras/request-response-optvm.tex}
+\begin{lstlisting}[language=json,firstnumber=1]
+{
+  "objectives": [{"id": "MIN_ENERGY_CONSUMPTION"}, {"id": "MIN_INSTALLATION_TIME"}],
+  "constraints": [{
+    "type": "Cost",
+    "params": {
+      "max_per_memory": 0.35
+    }
+  }]
+}
+\end{lstlisting}
 
 Após a criação de um política, é possível usá-la para fazer otimizações. A mesma
 política, pode ser utilizada por múltiplas otimizações.
@@ -308,7 +330,7 @@ também para o XML:
 \begin{lstlisting}[language=json,firstnumber=1]
 {
   "id": 1,
-  "policy": 2,
+  "policyId": 2,
   "clouds": [
     {
       "id": 1,
@@ -337,6 +359,7 @@ E a resposta terá o seguinte formato:
 \begin{lstlisting}[language=json,firstnumber=1]
 {
   "id": 1,
+  "policyId": 2,
   "hosts": [
     {
       "cloud": 1,
@@ -345,8 +368,9 @@ E a resposta terá o seguinte formato:
     }, 
     ...
   ],
-  "details": "/optimizations/1/details",
-  "metrics": "/optimizations/1/metrics"
+  "policy": "http://host.domain/api/policies/2",
+  "details": "http://host.domain/optimizations/1/details",
+  "metrics": "http://host.domain/optimizations/1/metrics"
 }
 \end{lstlisting}
 
@@ -356,14 +380,34 @@ haverá outros itens.
 
 \section{TECNOLOGIAS UTILIZADAS}
 
+O desenvolvimento de uma API pode envolver ferramentas como bibliotecas, frameworks e 
+bancos de dados. Nesta seção, são apresentadas as principais ferramentas que foram utilizadas para
+fazer o desenvolvimento da API. 
+
 \subsection{MOEA Framework}
-
-@TODO Falar sobre o MOEA ?
-
-\subsection{JAXRS}
-
-@TODO Falar sobre JAXRS e seu Deploy ?
+Segundo \cite{moea}, o \textit{Moea Framework} é um framework é uma
+biblioteca gratuita que serve para experiementar e desenvolver
+algoritmos evolucionários baseados em múltiplos objetivos. Nesta biblioteca
+existem diversos algoritmos, incluindo vários tipos de GAs, que foram utilizados
+no desenvolvimento deste trabalho.
 
 \subsection{MongoDB}
+MongoDB é um banco de dados orientado a documentos. A escolha dele foi
+feita por dois principais motivos:
 
-@TODO Falar do porquê de usar mongo (Dados não estruturados) ?
+\begin{enumerate}
+  \item Facilidade no desenvolvimento;
+  \item Facilidade de armazenamento de dados não estruturados.
+\end{enumerate}
+
+O mongoDB faz o armazenamento dos documentos, que, basicamente são um JSON
+armazenado de maneira binária e eficaz. O banco separa esses JSONs em coleções,
+que podem ser separadas da maneira que o usuário achar melhor.
+
+Como o MongoDB é orientado a documentos, é possível utilizá-lo para armazenar
+dados que não necessáriamente sigam a mesma estrutura sempre. Isso é importante no contexto do
+OptVM por causa da flexibilidade que o próprio OptVM permite. Por exemplo, no
+caso das restrições, o OptVM permite que sejam criadas restrições de diversos tipos,
+tendo parâmetros também de tipos diferentes, sendo assim, utilizar um banco de 
+dados não estruturado, é uma alternativa melhor, pois permite flexibilidade no armazenamento
+dos itens.

@@ -18,7 +18,7 @@ que pode ser utilizado, ou não, para a criação de serviços SOA. O \textit{Si
 para a criação de serviços SOA.
 
 Além disso, nas seções posteriores, o capítulo também apresenta algoritmos que ajudam a 
-resolver o problema da seleção de host para migração de VM através de otimização multiobjetivo (MOO). 
+resolver o problema da seleção de host para migração de VM através de otimização multi-objetivo (MOO). 
 Existem vários algoritmos que podem ser utilizados para a resolução desse tipo de problema. 
 Neste trabalho, são abordados os algoritmos genéticos (GAs), que fazem parte de um grupo 
 maior de algoritmos, chamado algoritmos evolucionários (EAs). 
@@ -234,54 +234,129 @@ Uma comparação do SOAP com o rest, pode ser observado na Tabela \ref{tab:rest-
 
 \input{dados/tabelas/rest-vs-soap.tex}
 
-\section{OTIMIZAÇÃO MULTI-OBJETIVO (MOO)}  
-Problemas de otimização buscam, de alguma maneira, um bom resultado para a execução de alguma tarefa.
-Segundo Veloso \cite{veloso} para os problemas de otimização, existem de maneira geral, 
-dois tipos de problemas, os mono-objetivos e os multi-objetivos. 
-Os mono-objetivos buscam otimizar uma solução baseando-se em um único objetivo, por consequência, 
-problemas mono-objetivo resultam em um único resultado, que pode ser considerada a solução ótima para o 
-problema. Já os multi-objetivo, buscam atender vários fatores, e isso torna a solução ótima mais 
-difícil de ser encontrada.
-
-Conforme Ticona \cite{ticona} um problema de otimização multi-objetivo, é representado por um 
-conjunto de funções objetivo que devem ser otimizadas. 
-
-Segundo \cite{Hashimoto} num problema multi-objetivo, considera-se um conjunto de 
-variávies, que são chamadas de solução, que busca otimizar mais de uma função objetivo 
-satisfazendo algumas restrições. 
-
-No universo dos algoritmos de otimização multi-objetivo, existem diversos tipos, e nesse trabalho
-será utilizado algoritmos genéticos, os quais fazem parte da classe de algoritmos evolucionários.
-Os mesmos serão descritos a seguir nesse capítulo.
- 
-\section{ALGORITMOS EVOLUCIONÁRIOS (EA)}
-Segundo \cite{ticona}, algoritmos evolucionários (AE) tem sido muito utilizados para problemas de 
-otimização. Um dos motivos do uso deles, é por causa da possibilidade de resolver problemas que 
-envolvam múltiplos objetivos. A abordagem utilizada neste tipo de algoritmo é baseada na 
-evolução humana. O processo é baseado seleção natural de Darwin, da mesma maneira que acontece com a 
-seleção das espécies. O algoritmo reproduz artificialmente o processo de seleção natural para 
-encontrar os mais aptos a resolver determinado problema. O objetivo desses algoritmos é 
-encontrar aproximações da solução perfeita para problemas difíceis. 
-
-Dentro da categoria dos AEs para otimização baseada em multiplos objetivos, existem diferentes modelos. 
-
-O modelo de utilizado neste trabalho é a de algoritmos genéticos (AG). Esta é uma classe de 
-algoritmos muito utilizada em otimizações multi-objetivo. 
-
 \section{ALGORITMOS GENÉTICOS (GA)}
-@TODO
+Algoritmos genéticos (GAs) são uma classe de algoritmos que se baseam
+na evolução natural de Darwin. Esse processo envolve criar uma população,
+selecionar os indivíduos mais aptos através de uma função objetivo,
+aplicar mutação e \textit{crossover} na população. 
+Esse processo resulta em gerações (novas populações)
+mais adequadas em relação ao objetivo que está sendo
+avaliado na fase de seleção, assim como ocorre na teoria da 
+seleção natural, os mais "adequados" sobrevivem. O processo evolutivo 
+(os passos anteriores para geração de novas populações)
+continua até que haja um critério de parada. Este processo é
+ilustrado no fluxograma da imagem \ref{fig:gaalgorithm}.
+
+De maneira geral, o GA utiliza a função objetivo (OF) para
+a seleção, ou seja, escolha dos mais adequados, 
+utiliza o \textit{crossover} para a convergência das soluções para melhores soluções,
+e a mutação como operador de diversidade.
+
+\begin{figure}[!htb]
+  \centering
+  \caption{Exemplo GA}
+  \includegraphics[width=0.65\textwidth]{./dados/figuras/ga-algorithm.png}
+  \label{fig:gaalgorithm}
+\end{figure}
+
+\subsection{Seleção}
+Conforme \cite{ghosh}, o principal objetivo do operador de seleção é
+manter as soluções boas e eliminar as ruins mantendo o tamanho da população
+constante.
+
+Existem vários tipos de operadores de seleção. Entre eles, os mais comuns são: 
+\textbf{Tournament Selection}, \textbf{Proportionate Selection} e 
+\textbf{Ranking Selection}. Cada tipo de operador de seleção utiliza uma estratégia diferente 
+para fazer a seleção dos melhores indivíduos. O resultado da seleção 
+feita por esse tipo de operador é chamada de \textit{mating pool}, que representam 
+os indivíduos selecionados para a reprodução.
+
+\subsection{\textit{Crossover}}
+O operador de \textit{crossover} é responsável pelo processo onde dois cromossomos 
+são cruzados. Segundo \cite{ghosh}, dois cromossomos são selecionados da \textit{mating pool}
+e parte deles são misturados para que seja feita a criação de novos indivíduos. 
+Nos GAs a quantidade de indivíduos que são escolhidos para o cruzamento, dependem da probabilidade
+de crossover. Após o cruzamento, é gerada uma nova geração (\textit{offspring population}). 
+Depois da fase de \textit{crossover}, o algoritmo segue para a mutação,
+conforme o fluxograma \ref{fig:gaalgorithm} ilustra.
+
+\subsection{Mutação}
+A mutação é uma etapa que é responsável por manter a diversidade na população. Isso
+é feito através da mudança do valor de genes de algum cromossomo da população. Geralmente, o operador
+de mutação é utilizado com uma probabilidade baixa, pois caso contrário, seriam
+geradas somente populações aleatórias. 
+
+A mutação do gene é importante para que as gerações não tenham uma convergência para 
+um único ponto. Tanto o crossover quanto a mutação, fazem com que o espaço de busca
+de soluções ótimas, seja ampliado. 
+
+Segundo \cite{ghosh}, estes operadores genéticos do GA, podem ser usados para otimizar tanto
+problemas mono-objetivo e também multi-objetivo. Neste trabalho, será utilizado
+o algoritmo para um problema multi-objetivo, por esse motivo, a próxima seção aborda
+este tipo de problema.
+
+\section{OTIMIZAÇÃO MULTI-OBJETIVO (MOO)} 
+Segundo \cite{ghosh} um problema de otimização multi-objetivo, como
+o própior nome sugere, possui N objetivos que devem ser otimizados. 
+Na otimização multi-objetivo, existem duas variáveis importantes
+para fazer a seleção dos indivíduos de uma população,
+que são o espaço de busca (\textit{search space}) e o 
+espaço dos objetivos (\textit{objective space}).
+
+O espaço de busca é representado pelos valores das variávies dos 
+indivíduos de uma população. Através desses valores, os indivíduos
+são avaliados e possuem um valor correspondente no \textit{objective space}. 
+Este valor é calculado através de seu \textit{fitness}, ou seja, representa
+o quão apto aquele espaço de busca é em relação aos objetivos.
+
+\begin{figure}[!htb]
+  \centering
+  \caption{Espaço de decisáo e espaço dos objetivos}
+  \includegraphics[width=0.9\textwidth]{./dados/figuras/searchspace-decisionspace.png}
+  \label{fig:moospaces}
+\end{figure}
+
+\subsection{Dominância de pareto}
+Após o mapeamento do espaço de busca e espaço de objetivos, é necessário
+ter uma maneira de reconhecer os melhores indivíduos. Uma possível
+estratégia para o reconhecimento dos melhores no contexto de MOO 
+é a \textbf{Dominância de Pareto}.
+
+Segundo \cite{ghosh}, problemas de MOO, as OFs são conflitantes por natureza, e 
+por consequência, cada OF possui uma solução ótima. Para resolver este problema,
+as OFs não devem ser consideradas individualmente na avaliação de um indivíduo.
+Sendo assim, uma solução é dominada caso nenhum objetivo seja melhor do que
+o qual está sendo comparado. Por exemplo, tendo a \textbf{s1 e s2} como soluções,
+para as OFs \textbf{f1 e f2}, \textbf{s1} domina \textbf{s2} se, \textbf{f1 e f2}
+da \textbf{s1} tem melhores resultados que \textbf{s2}. 
+Caso uma das OFs não seja melhor, a \textbf{s2} ja é considerada não dominada.
+
+O objetivo quando se está fazendo uma otimização multi-objetivo é buscar
+a chamada \textbf{fronteira de pareto} ou \textit{pareto-front}. Onde, apenas
+as soluções que não são dominadas por nenhuma outra solução farão parte. 
+
+\begin{figure}[!htb]
+  \centering
+  \caption{Pareto-front}
+  \includegraphics[width=0.6\textwidth]{./dados/figuras/pareto-front.png}
+  \label{fig:paretofront}
+\end{figure}
 
 \section{TRABALHOS RELACIONADOS}
-Neste capítulo será apresentado o problema em que o OptVM se propõem resolver. 
-Isso será feito através da apresentação de alguns fatos relacionados a nuvens computacionais 
-e como elas costumam ser utilizadas nos dias de hoje.
+O OptVM busca oferecer um suporte para a migração de máquinas virtuais. Esse
+suporte é oferecido através de um serviço que seleciona um subconjunto de hosts 
+dos possíveis alvos de migração. Além disso, oferece uma maneira de restringir
+a escolha dos hosts que não são elegiveis por questões relacionadas a negócio.
+
+Esta seção apresenta alguns trabalhos relacionados ao problema que o OptVM está
+se propondo a resolver.
 
 \subsection{Migração de máquinas virtuais}
 As nuvens computacionais são utilizadas pela maioria das empresas de software da atualidade. 
 Por esse motivo, as maiores empresas do setor investem muito neste segmento, 
 oferecendo vários tipos de serviços diferenciados para seus consumidores. 
 Estas empresas concorrem em alguns aspectos, como: velocidade, preço, disponibilidade e etc. 
-Para aumentar sua competitividade nesses aspectos, muitas vezes é utilizada a virtualização.
+Para aumentar sua competitividade, é utilizada a virtualização.
 
 Com a virtualização é possível alocar partes de um recurso físico para diferentes consumidores, 
 fazendo com que um recurso físico se torne melhor utilizado. Isso deixa a alocação de recursos
@@ -289,14 +364,16 @@ muito mais flexível, e torna possível obter uma elasticidade nos serviços ofe
 
 Uma dos objetivos de utilizar a virtualização é obter uma elasticidade dos recursos oferecidos.
 Ou seja, é possível aumentar sua capacidade de processamento, armazenamento mesmo depois que o
-já foi alocada uma VM para o usuário. 
-Isso permite que um consumidor do  serviço possa escolher o quanto precisa para executar as tarefas que deseja, 
-assim como o provedor também consegue otimizar o uso de seus recursos
+já foi alocada uma VM para o usuário.
+Isso permite que um consumidor do  serviço possa escolher o quanto precisa para executar as 
+tarefas que deseja, assim como o provedor também consegue otimizar o uso de seus recursos. Porém,
+existem casos onde uma máquina virtual não consegue aumentar seu consumo de recursos, por uma limitação
+do host em que está alocada. Nestes casos, é necessário ser feito uma realocação de VM para outro 
+host.
 
-Essa realocação de uma VM pode ser feita a nível de nuvem, datacenter(DC) ou host. 
+A realocação de uma VM pode ser feita a nível de nuvem, datacenter(DC) ou host.
 Quando a realocação é feita em nível de DC ou nuvem, é muito provável que seja 
 necessário migrar uma VM do local em que ela se encontra. 
-Caso seja necessário uma migração de uma máquina, existem alguns pontos que devem ser avaliados.
 
 Três momentos podem ser considerados os pontos principais a serem avaliados para uma migração, 
 são eles:
@@ -307,13 +384,13 @@ são eles:
 \item Para onde deve ocorrer a migração
 \end{enumerate}
 
-Estas otimizações e migrações das VMs são necessárias em ambientes que envolvem uma infraestruturas
+As migrações das VMs são necessárias em ambientes que envolvem uma infraestruturas
 grande, onde existem multiplos hosts, datacenters e nuvens. Por esse motivo, não é recomendado que 
 um sistema ou serviço gerencie a infraestrutura inteira sozinho, pois sua escalabilidade 
 poderia se tornar um gargalo. Isso faz com que sejam construidos diferentes serviços e aplicações 
 que se integram e gerenciam a infraesturua.
 
-\subsection{Otimização na escolha de um host}
-Como citado anteriormente uma das partes essenciais na migração de uma VM é a escolha de um destino para ela.
-Para isso, é importante escolher um destino que aloque muito bem a VM e não seja necessário fazer uma outra
-migração logo em seguida. 
+O OptVM é uma alternativa para lidar com o terceiro momento da migração. 
+Ajuda a escolher o destino da VM através de um \textit{webservice}. Isso 
+remove uma das responsabilidades do serviço de gerencia da infraestrutura da
+núvem, diminuindo a possibilidade de um gargalo.
