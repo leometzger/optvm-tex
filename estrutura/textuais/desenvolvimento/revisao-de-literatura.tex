@@ -60,13 +60,14 @@ utilizando web services SOAP, REST ou chamadas RPCs.
 
 \subsection{Enterprise Service Bus (ESB)}
 
-Para obter essa flexibilidade na construção dos serviços, o é comum o SOA utilizar
-uma camada que recebe a chamada dos serviços e encaminha para o serviço correto.
-Essa camada, além da responsabilidade enfileirar as mensagens enviadas aos serviços,
-também faz a tradução da comunicação, caso um serviço trabalhe somente com SOAP e outro somente
+Para obter essa flexibilidade na construção dos serviços, é comum que com SOA se
+utilize uma camada que recebe a chamada dos serviços e encaminha para o serviço correto,
+ela faz isso através de um enfileiramento de mensagens.
+Essa camada, além de ter responsabilidade enfileirar as mensagens enviadas aos serviços,
+também pode fazer a tradução da comunicação, caso um serviço trabalhe somente com SOAP e outro somente
 com REST.
 
-A arquitetura utilizando SOA fica semelhante a da imagem.
+A arquitetura utilizando SOA fica semelhante a da Figura \ref{fig:soaesb}.
 
 \begin{figure}[!htb]
   \centering
@@ -78,14 +79,15 @@ A arquitetura utilizando SOA fica semelhante a da imagem.
 \section{REPRESENTATIONAL STATE TRANSFER (REST)}
 REST foi formalizado por Fielding \cite{fielding} em sua tese de doutorado, onde ele tem por 
 objetivo apresentar uma arquitetura para criação de sistemas network-based. 
-Na tese, REST é definido como um estilo arquitetural. Fielding também define seis restrições que 
+Na tese, REST é definido como um estilo arquitetural. Fielding também define seis diretivas que 
 devem ser respeitadas na criação de um software que é implementado utilizando este estilo arquitetural. 
+As diretivas são maneiras de implementar a API para simplificar o uso e melhorar a 
+arquitetura da API que está sendo construída. 
 
 A comunicação no REST, é feita via \textit{Hypertext Trasfer Protocol} (HTTP). Desta meneira
 a comunicação cliente-servidor é feita utilizando as funcionalidades que o protocolo suporta,
 como: a utilização de cabeçalhos, \textit{query-strings}, \textit{Universal Resource Identifiers}(URIs),
-entre outros recursos do protocolo. Como foco deste trabalho é o estilo arquitetural REST, 
-o mesmo não contempla detalhes sobre o funcionamento deste protocolo, apenas a utilização dele.
+entre outros recursos do protocolo.
 
 \begin{figure}[!htb]
   \centering
@@ -94,14 +96,14 @@ o mesmo não contempla detalhes sobre o funcionamento deste protocolo, apenas a 
   \label{fig:rest1}
 \end{figure}
 
-Neste capítulo será apresentado as seis restrições que são definidas por Fielding
+Neste capítulo são apresentadas as seis diretivas que são definidas por Fielding
 que um sistema deve atender quando REST é utilizado e a maneira de utilização dos
 verbos HTTP no padrão arquitetural. 
 
-As restrições, podem ser atendidas em sua totalidade
-ou não, isso depede do nível de maturidade da API. Uma API que não atende todas as restrições
+As diretivas, podem ser atendidas em sua totalidade
+ou não, isso depede do nível de maturidade da API. Uma API que não atende todas as diretivas 
 não está deixando de utilizar REST, apenas o utiliza com um nível de maturidade
-menor. As seis restrições são:
+menor. As seis diretivas do REST são:
 
 \begin{enumerate}
   \item Interface uniforme
@@ -190,15 +192,15 @@ através de \textit{load-balance}, aumento de segurança (autenticação), entre
 
 Esta restrição é opcional e pouco utilizada. Segundo \cite{todd} é uma maneira de
 extender a funcionalidade através de envio de código para ser executado pelo cliente.
-Esta restrição deve ser aplicada apenas quando não viole outras restrições.
+Esta restrição deve ser aplicada apenas quando não viole outras diretivas.
 
 \subsection{Verbos HTTP}
 
 Além dos itens citados nas seções anteriores, outra parte importante no REST,
 para a uniformidade da interface, são os \textbf{verbos http}. Os verbos
 HTTP representam a ação que o usuário da API está querendo tomar através da
-requisição enviada. Isso é muito importante, pois da um contexto para cada
-tipo de requisição da API.
+requisição enviada. Isso é muito importante, pois atribuí um contexto para cada
+tipo de requisição da API através do tipo do verbo utilizado.
 
 \input{dados/tabelas/verbos-http.tex}
 
@@ -219,7 +221,7 @@ utilizando outros protocolos. Além do SOAP permitir utilizar outro protocolo,
 ele não restringe a implementação em alguma linguagem de programação específica, ou seja,
 é possível implementá-lo em qualquer linguagem de programação.
 
-O SOAP é comparado com ao REST, pois os dois podem ser utilizados para um objetivo 
+O SOAP é comparado ao REST, pois os dois podem ser utilizados para um objetivo 
 semelhante, porém, os dois tem um foco diferente, onde o SOAP tem como objetivo expor regras de negócio 
 como serviço, e o REST visa representar um determinado estado e manipulá-lo através de operações 
 bem definidas.
@@ -245,12 +247,13 @@ avaliado na fase de seleção, assim como ocorre na teoria da
 seleção natural, os mais "adequados" sobrevivem. O processo evolutivo 
 (os passos anteriores para geração de novas populações)
 continua até que haja um critério de parada. Este processo é
-ilustrado no fluxograma da imagem \ref{fig:gaalgorithm}.
+ilustrado no fluxograma da Figura \ref{fig:gaalgorithm}.
 
 De maneira geral, o GA utiliza a função objetivo (OF) para
 a seleção, ou seja, escolha dos mais adequados, 
 utiliza o \textit{crossover} para a convergência das soluções para melhores soluções,
-e a mutação como operador de diversidade.
+e a mutação como operador de diversidade. Estes operadores são importante para
+obter tipos diferentes de soluções, inicialmente inexplorados pelo algoritmo.
 
 \begin{figure}[!htb]
   \centering
@@ -278,7 +281,7 @@ e parte deles são misturados para que seja feita a criação de novos indivídu
 Nos GAs a quantidade de indivíduos que são escolhidos para o cruzamento, dependem da probabilidade
 de crossover. Após o cruzamento, é gerada uma nova geração (\textit{offspring population}). 
 Depois da fase de \textit{crossover}, o algoritmo segue para a mutação,
-conforme o fluxograma \ref{fig:gaalgorithm} ilustra.
+conforme a Figura \ref{fig:gaalgorithm} ilustra.
 
 \subsection{Mutação}
 A mutação é uma etapa que é responsável por manter a diversidade na população. Isso
@@ -288,7 +291,10 @@ geradas somente populações aleatórias.
 
 A mutação do gene é importante para que as gerações não tenham uma convergência para 
 um único ponto. Tanto o crossover quanto a mutação, fazem com que o espaço de busca
-de soluções ótimas, seja ampliado. 
+de soluções ótimas, seja ampliado. Isso é importante para que nenhuma solução ótima
+passe despercebido. Sem este operador de diversidade, as soluções podem convergir para
+um ponto em que todas fiquem muito parecidas, o que não é interessante pois soluções
+melhores podem estar localizadas em um ponto diferente da busca.
 
 Segundo \cite{ghosh}, estes operadores genéticos do GA, podem ser usados para otimizar tanto
 problemas mono-objetivo e também multi-objetivo. Neste trabalho, será utilizado
@@ -297,7 +303,7 @@ este tipo de problema.
 
 \section{OTIMIZAÇÃO MULTI-OBJETIVO (MOO)} 
 Segundo \cite{ghosh} um problema de otimização multi-objetivo, como
-o própior nome sugere, possui N objetivos que devem ser otimizados. 
+o próprio nome sugere, possui N objetivos que devem ser otimizados. 
 Na otimização multi-objetivo, existem duas variáveis importantes
 para fazer a seleção dos indivíduos de uma população,
 que são o espaço de busca (\textit{search space}) e o 
@@ -326,14 +332,23 @@ Segundo \cite{ghosh}, problemas de MOO, as OFs são conflitantes por natureza, e
 por consequência, cada OF possui uma solução ótima. Para resolver este problema,
 as OFs não devem ser consideradas individualmente na avaliação de um indivíduo.
 Sendo assim, uma solução é dominada caso nenhum objetivo seja melhor do que
-o qual está sendo comparado. Por exemplo, tendo a \textbf{s1 e s2} como soluções,
-para as OFs \textbf{f1 e f2}, \textbf{s1} domina \textbf{s2} se, \textbf{f1 e f2}
-da \textbf{s1} tem melhores resultados que \textbf{s2}. 
-Caso uma das OFs não seja melhor, a \textbf{s2} ja é considerada não dominada.
+o qual está sendo comparado. Por exemplo:
+
+\begin{enumerate}
+  \item \textbf{s1 e s2} são duas soluções;
+  \item \textbf{f1 e f2} são duas funções objetivo;
+  \item \textbf{s1} domina \textbf{s2} se:
+    \begin{enumerate}
+      \item \textbf{f1 e f2} da \textbf{s1} tem melhores resultados que \textbf{s2}.
+    \end{enumerate}
+  \item \textbf{s1} tenha melhores resultados na OF \textbf{f1} e \textbf{s2} na OF \textbf{f2}
+  ambas são consideradas não dominadas.
+\end{enumerate}
 
 O objetivo quando se está fazendo uma otimização multi-objetivo é buscar
 a chamada \textbf{fronteira de pareto} ou \textit{pareto-front}. Onde, apenas
-as soluções que não são dominadas por nenhuma outra solução farão parte. 
+as soluções que não são dominadas por nenhuma outra solução fazem parte, ou seja,
+são as melhores soluções para um problema levando em conta os múltiplos objetivos.
 
 \begin{figure}[!htb]
   \centering
@@ -393,4 +408,4 @@ que se integram e gerenciam a infraesturua.
 O OptVM é uma alternativa para lidar com o terceiro momento da migração. 
 Ajuda a escolher o destino da VM através de um \textit{webservice}. Isso 
 remove uma das responsabilidades do serviço de gerencia da infraestrutura da
-núvem, diminuindo a possibilidade de um gargalo.
+nuvem, diminuindo a possibilidade de um gargalo.

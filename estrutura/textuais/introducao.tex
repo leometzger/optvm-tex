@@ -3,7 +3,7 @@
 
 Com a evolução da computação em nuvem, surgiram necessidades cada vez maiores de utilizar ao 
 máximo o poder dos computadores sem sobrecarregar os mesmos, e os componentes que o fazem funcionar,
-como o uso de energia. Estas necessidades surgem para atender 
+assim como o uso de energia. Estas necessidades surgem para atender 
 requisitos de diminuição de custos, aumento de desempenho, diminuição no consumo de energia,
 entre outros objetivos que fazem com que usuários de computação em nuvem e empresas que usam 
 este tipo de serviço obtenham vantagem no uso dela.
@@ -14,14 +14,14 @@ por máquinas físicas(PMs) e máquinas virtuais(VMs), sendo que, cada PM normal
 pelo menos uma ou mais VMs. Essa utilização das VMs permite que seja construído um ambiente flexível
 em relação a organização e quantidade de VM por Hosts em cada \textit{datacenter}.
 
-Em um cenário que o ambiente em que temos a possibilidade de utilizar as PMs como host de múltiplas VMs,
+Um cenário em que temos a possibilidade de utilizar as PMs como host de múltiplas VMs,
 é possível que as VMs da nuvem sejam organizadas de diferentes maneiras em relação as PMs. A decisão
-de organizar a núvem de uma maneira ou de outra, envolvem os objetivos de quem está gerenciando a núvem. 
+de organizar a nuvem de uma maneira ou de outra, envolvem os objetivos de quem está gerenciando a nuvem. 
  
  Os objetivos podem ser os mais variados. Por exemplo, uma empresa que 
  use o serviço da nuvem pode querer ter um alto desempenho, assim como pode querer ter o menor custo 
  possível. Por esse motivo, existem pesquisas que buscam maneiras de melhorar a alocação e realocação de VMs,
- e uma das formas de resolver este tipo problema, é utilizar a otimização multiobjetivo (MOO). 
+ e uma das formas de resolver este tipo problema é utilizar a otimização multiobjetivo (MOO). 
 
 A migração de uma VM envolve algumas etapas, como, a descoberta da necessidade de migração, 
 a escolha de uma VM a ser migrada e a escolha de um host de destino para essa VM.
@@ -34,25 +34,45 @@ pois o host selecionado tem que melhorar a maneira em que os hosts estão organi
 para que não haja novas migrações por conta da migração inicial.
 
 Este trabalho tem papel de servir como apoio para a migração de VMs em ambientes de computação em nuvem. 
-Isto é feito através de uma abordagem em que um gerenciador de núvem, que precise migrar uma VM, possa 
+Isto é feito através de uma abordagem em que um gerenciador de nuvem, que precise migrar uma VM, possa 
 utilizar um serviço que selecionará as melhores opções de host para fazer a migração de uma VM. 
 O serviço possui uma abordagem que utiliza algoritmos que fazem uma seleção dos melhores hosts baseando-se 
 nos objetivos do consumidor do serviço. Contudo, o serviço é uma solução caixa preta, esta característica 
 traz uma grande vantagem, o usuário não precisa conhecer nada sobre os algoritmos utilizados, 
-precisa apenas utilizar a interface que é definida pelo serviço. A interface do serviço é construida
-em cima de \textit{webservices}, utilizando padrões bem conhecidos para facilitar a integração dos gerenciadores
+precisa apenas utilizar a interface que é definida pelo serviço. A interface do serviço é baseada em
+\textit{webservices}, utilizando padrões conhecidos para facilitar a integração dos gerenciadores
 das núvens computacionais.
 
-Este trabalho apresenta uma aplicação prática da construção de um \textit{webservice} utilizando padrões bem conhecidos
+Este trabalho apresenta uma aplicação prática da construção de um \textit{webservice} utilizando padrões conhecidos
 na indústria. Além do \textit{webservice}, o trabalho também apresenta uma aplicação de algoritmos de otimização multiobjetivo
-para um problema que existe hoje. Também são feitos testes e gerados métricas para a avaliação dos resultados.
+para um problema que existe hoje. Além disso, são feitos testes para a avaliação dos resultados e gerados métricas através deles.
+
+\section{METODOLOGIA}
+
+Para o desenvolvimento desse trabalho, foi feita pesquisa exploratória em possíveis
+soluções para resolução do problema e após a etapa de exploração, foram feitas
+avaliações quantitativas da aplicação da solução.
+
+Existem muitas ferramentas tanto para a construção de \textit{webservices} quanto
+para a otimização multiobjetivo. Para o desenvolvimento de uma solução, devem 
+ser escolhidas as ferramentas que melhor se adequam para resolver o problema em questão.
+Na fase de exploração, diversas referências bibliográficas foram utilizadas para 
+a busca e avaliação de ferramentas disponíveis para utilizar no desenvolvimento. 
+
+Após as ferramentas escolhidas, foi desenvolvido a solução. A criação do \textit{webservice} foi 
+feito em JAVA, porém, qualquer linguagem de programação que consiga fazer requisições HTTP.
+Por esse motivo, foi feita uma avalação qualitativa dos resultados obtidos com a solução.
+Os resultados foram quantificados e avaliados com diferentes quantidades de \textit{clouds/hosts},
+utilizando métricas de requisições por segundo (RPS) e tamanho da requisição.
+
+Os resultados obtidos após a avaliá-los foram documentados no capítulo quatro
+deste trabalho, assim como as variáveis utilizadas para os testes feitos.
 
 \section{ORGANIZAÇÃO DO TRABALHO}
 \label{sec:organizacaoTrabalho}
 
-O trabalho está organizado em seis capítulos. O primeiro, destina-se a dar uma introdução do problema e forma de resolvê-lo
-Já o segundo capítulo, irá dar o embasamento teórico necessário para o entendimento dos demais capítulos.
-O terceiro destina-se a metodologia utilizada para o desenvolvimento do trabalho. No quarto serão apresentados
-aspectos da implementação da solução para o problema encontrado. Os resultados obtidos com a implementação
-apresentada no capítulo quarto serão feitas no capítulo cinco. E por último as conclusões que foram obtidas
-na realização do trabalho.
+O trabalho está organizado em seis capítulos. O primeiro, contextualiza e descreve o problema e a forma de resolvê-lo
+Já o segundo capítulo, dá embasamento teórico necessário para o entendimento dos demais capítulos.
+No terceiro serão apresentados aspectos da implementação da solução para o problema encontrado. 
+Os resultados obtidos com a implementação apresentada no capítulo três serão feitas no capítulo quatro. 
+E por último as conclusões que foram obtidas a partir da realização do trabalho.

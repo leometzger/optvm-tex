@@ -1,14 +1,57 @@
 \chapter{CONCLUSÃO}
 \label{chap:conclusao}
+A otimização da seleção de hosts na migração de máquinas virtuais
+foi o objetivo da solução deste trabalho. Com o crescimento da 
+utilização de computação em nuvem, esse é um tipo de problema em que
+a indústria começa a se deparar. A otimização na utilização de recursos 
+computacionais tem uma importância por diminuir o custo para empresas,
+melhorar o consumo de energia, entre outros fatores que fazem com que 
+o trabalho seja útil.
 
-@TODO
+Neste trabalho a solução foi desenvolvida através de um serviço utilizando REST 
+como estilo arquitetural e algoritmos genéticos para a otimização. 
+O trabalho fornece uma solução genérica, onde, outros trabalhos que 
+envolvam migração de máquinas virtuais e que envolvam uma ou mais núvens, 
+possam fazer uso da API construída. 
+
+@TODO Apresentar resultados
+@TODO Falar sobre resultados
 
 \section{TRABALHOS FUTUROS}
 \label{sec:trabalhosFuturos}
 
-@TODO
+Este trabalho permitiu ampliar o campo de visão de soluções para
+o problema de otimização de migração de VMs, especialmente na seleção
+de hosts. É possível fazer melhores versões ou evoluir a partir deste trabalho.
 
+\subsection{Pesquisas em restrições para o ambiente de núvens federadas}
+
+Neste trabalho, foram apresentadas restrições em nível de \textit{cloud},
+\textit{datacenter} e \textit{host}. Futuramente, podem ser exploradas
+alternativas para esses níveis. Além disso, também é possível fazer
+uma busca de outras restrições, que façam parte de algum destes
+três grupos.
+
+\subsection{Comparação de algoritmos MOO para migração de máquinas virtuais}
+
+Algoritmos Genéticos são utilizados neste trabalho para fazer a parte
+de MOO. Porém, é possível utilizar vários outros tipos de algoritmos como
+\textit{Particle Swarm} (PS), \textit{Variable Neghborhood Search} (VNS) e
+\textit{Ant Colony Optimization} (ACO). Diferentes algoritmos podem ser utilizados 
+para efeito de comparação para este problema. 
+
+\subsection{Generalização do problema}
+
+O problema abordado neste trabalho é bastante específico e pode ser 
+generalizado. Por exemplo, o trabalho não leva em consideração o "efeito colateral"
+em razão da migração da VM.
+
+O serviço implementado no trabalho busca responder a pergunta: 
+\textbf{"Qual é o melhor subconjunto de hosts para esta VM migrar, respeitando as
+restrições e objetivos da política?"}. A partir desse questionamento, uma possível
+pergunta para o problema generalizado, levando em considerações os efeitos colaterais,
+seria: \textbf{"Qual é a melhor disposição que a federação pode ter considerando
+determinado cenário?"}.
+ 
 \section{CONSIDERAÇÕES FINAIS}
-\label{sec:consideracoesFinais}
-
 @TODO

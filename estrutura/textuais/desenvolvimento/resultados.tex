@@ -1,4 +1,55 @@
 \chapter{RESULTADOS}
-\label{chap:metodologia}
+\label{chap:results}
 
+Este capítulo é dedicado aos resultados obtidos com testes
+feitos utilizando a solução desenvolvida no trabalho. Os testes
+utilizaram um ambiente de VM para que os testes possam ser reproduzidos 
+mais fácilmente. Foram utilizadas diferentes métricas para avaliar
+o comportamento da API. Além das diferentes métricas, os dados inseridos 
+também possuem diferentes formatos e valores. Isso foi feito para que 
+seja percebido o comportamento da API em diferentes cenários, assim como
+avaliar se o comportamento é alterado drásticamente ou mantem seu comportamento
+mesmo em casos extremos.
+
+É importante definir bem como a API se comporta em cenários diferentes, pois,
+dependendo aonde ela estiver instalada, cada requisição gera um custo. Por exemplo, se a API 
+estiver hospedada em nuvem, cada requisição tem um custo, seja ele por tráfego de
+rede, armazenamento dos dados, processamento, etc. 
+
+\section{AMBIENTE}
+
+O ambiente utilizado foi uma máquina virtual utilizando \textbf{Ubuntu Server 18.04}
+com memória de \textbf{4.0GB} utilizando um processador \textbf{Intel i5}. As requisições
+são feitas através de uma rede \textit{bridge} da máquina física para a virtual.
+A escolha de um ambiente com VM é permitir o isolamento e reserva de recursos.
+
+\section{DADOS UTILIZADOS}
+A API do OptVM permite que seja feitas várias combinações de dados. As combinações
+podem variar em relação à restrições utilizadas, objetivos da otimização, quantidade
+de hosts, nuvens e datacenters envolvidos, entre outros. 
+
+Na avaliação dos resultados, foram utilizados dados que simulam casos simples e casos mais 
+complexos. O formato dos cenários utilizados é demonstrado na Tabela \ref{tab:testdata-info}
+
+\input{dados/tabelas/testdata-info.tex}
+
+\section{MÉTRICAS UTILIZADAS}
+É muito comum uma API ser medida através de uma medida quantitativa de requisições 
+por segundo (RPS) que ela consegue atender. Porém, o número de requisições 
+varia, e isso depende da tecnologia utilizada, arquitetura do sistema, se há 
+consulta em banco de dados ou não, algoritmos utilizado, etc.
+
+Além da métrica de requisições por segundo, outro aspecto importante na utilização de API
+é o tamanho do \textit{payload}. O payload, muitas vezes é atribuido um custo por 
+tráfego da máquina, e por processamento e armazenamento, sendo assim, quanto maior
+o payload, mais tráfego, processamento e armazenamento ele gerará, consequentemente,
+aumentará o custo. 
+
+\subsection{WRK}
+
+O WRK é uma ferramenta construída em C utilizada para fazer \textit{benchmarking} de 
+aplicações HTTP. Com ela é possível fazer requisições concorrentes utilizando 
+múltiplos ou um único core.
+
+\section{COMPARAÇÕES}
 @TODO
