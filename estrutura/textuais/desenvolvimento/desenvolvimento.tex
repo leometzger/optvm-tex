@@ -60,7 +60,7 @@ As restrições disponibilizadas e seus respectivos níveis são as seguintes:
 \begin{enumerate}
   \item Cloud:
   \begin{enumerate}
-    \item @TODO
+    \item \textit{CloudName}: Nome de uma nuvem em que o host não pode ser alocado.
   \end{enumerate}
 
   \item DC:
@@ -154,36 +154,102 @@ otimização o indivíduo possui uma representação (\textit{encoding}), que po
 de diversas maneiras, de maneira binária, por inteiros, entre outros tipos de representação.
 
 Como uma representação representa uma solução para o problema, no OptVM, a 
-representação escolhida foi uma representação binária, ou seja, uma solução
-para o problema é um array de booleanos onde cada booleano representa um host.
-O valor (\textit{true} ou \textit{false}), se o host está no subconjunto de soluções 
-ou não estaria alocada.
+representação escolhida foi uma representação de inteiros, ou seja, uma solução
+para o problema é um array de inteiros com tamanho do subconjunto escolhido pelo
+usuário onde cada número representa um host. Os números contidos no subconjunto
+representam o indice de um host de todos os disponíveis.
 
 \[
   Solution=
   \left[{\begin{array}{cccccc}
-    0 & 1 & 0 & 0 & 1 & 0 \\
+    36 & 5 & 120 \\
   \end{array}}\right
   ]
 \]
 
-No exemplo, o tamanho escolhido para o subconjunto é de 2 hosts, ou seja, 
-a otimização busca achar o melhor subconjunto de 2 hosts dentre os N disponíveis. 
-No exemplo, os 2 hosts escolhidos na solução, são os hosts 1 e 4 do conjunto de N hosts.
+No exemplo, o tamanho escolhido para o subconjunto é de 3 hosts, ou seja, 
+a otimização busca achar o melhor subconjunto de 3 hosts dentre os N disponíveis. 
+No exemplo, os 3 hosts escolhidos na solução, são os hosts 36, 5 e 120 do conjunto de N hosts.
 
 \section{FUNÇÕES OBJETIVO (OFs)}
 Como citado na seção anterior, são disponibilizadas três OFs e que internamente, o OptVM
 utiliza funções matemáticas para a representação das OFs. Nesta seção será demonstradas e
 explicadas as funções utilizadas pelo OptVM.
 
+As funções objetivo, assim como as restrições, utilizam a representação das entidades 
+(host, vm) e seus atributos para fazer o processamento necessário na etapa em que é responsável.
+
 \subsection{Minimização do consumo de energia}
-@TODO - Irei adicionar a explicação e a função matemática
+O consumo de energia é um aspecto importante a ser minimizado quando
+se trata da migração de uma VM. No contexto da otimização da seleção 
+de hosts para fazer a migração de uma VM, o host a ser buscado
+para receber a VM, deve ser o que impacte menos em relação ao consumo de 
+energia no processo de migração da VM.
+
+Segundo \cite{beloglazov}, o consumo de energia dos \textit{hosts} está relacionado
+ao uso de recursos de CPU. Apesar de estar relacionado, outros aspectos devem ser levados
+em conta, como a capacidade do CPU. A mesma utilização de CPU em processadores de capacidades
+diferentes, implica que o processador de menos capacidade gaste mais energia que o de maior capacidade.
+
+Conforme \cite{beloglazov} existe uma relação entre o consumo de CPU e o gasto de energia. Sendo assim,
+uma importante variável para esta OF é a utilização de CPU. O valor atribuído à utilização de CPU na OF é uma 
+percentagem, e é representada por $ U\textsubscript{cpu}_i $ na Equação \ref{eq:energ}. 
+
+Além disso, duas outras variáveis são utilizadas para calcular a energia gasta pelo \textit{host}, que são:
+O máximo de energia suportado pelo host e o mínimo (quando ele se encontra em estado inativo). Estas outras duas
+medidas são representadas por $ host_i $ $ (p\textsubscript{max}_i) $ e $ host_i $ $ (p\textsubscript{min}_i) $
+respectivamente.
+
+Com isso, podemos definir que a Equação que representa o consumo de energia é a seguinte:
+
+\begin{equation}
+energ(h_i ) =  ((p\textsubscript{max}_i - p\textsubscript{min}_i) * U\textsubscript{cpu}_i + p\textsubscript{min}_i) 
+\label{eq:energ}
+\end{equation}
 
 \subsection{Minimização do tempo de instalação}
-@TODO - Irei adicionar a explicação e a função matemática
+
+Para a migração de uma VM occorer, algumas etapas devem ser concluídas, são elas: 
+a detecção de uma migração, a transferência da VM para o \textit{host} de destino 
+e a instalação no mesmo. Esta OF está interessada em escolher um \textit{host} que 
+sobrecarregue o mínimo possível a última etapa da migração. 
+
+cap:
+\begin{equation}
+\begin{split}
+cap\textsubscript{h}_i = \sum_{k=1}^{Npes}(pe_k * mips_k)
+\end{split}
+\end{equation}
+
+
+\begin{equation}
+t\textsubscript{fix}\textsubscript{(vm}_i\textsubscript{)} = \sum_{j=1,i \neq j}^{N} M_j/larg\textsubscript{ban}({h}\textsubscript{i})
+\label{eq:tfix} 
+\end{equation}
+
+\begin{equation}
+\begin{split}
+t\textsubscript{reconf}\textsubscript{(vm}_i\textsubscript{)} = \dfrac{ (v\textsubscript{dr}(vm_i) * iter) + M_i}{larg\textsubscript{ban}} \; + t\textsubscript{fix}\textsubscript{(vm}_i\textsubscript{)} \\
+0<i<N, N <= Cap\textsubscript{hosts}
+\end{split}
+\label{eq:reconf}
+\end{equation}
 
 \subsection{Minimização da sobrecarga da migração}
-@TODO - Irei adicionar a explicação e a função matemática
+
+\begin{equation}
+sob\textsubscript{mig}(h_i) = \sum_{i=1}^{m}r_i * w_i
+\label{eq:sobHi}
+\end{equation}
+
+
+\begin{equation}
+\begin{split}
+sob\textsubscript{mig} = \sum_{i=1}^{N}sob\textsubscript{mig}(h_i) * P  \\
+N <= Cap\textsubscript{hosts}
+\end{split}
+\label{eq:sobrecarga}
+\end{equation}
 
 \section{COMUNICAÇÃO}
 Em termos gerais, uma API é uma interface de software que pode ser chamada e executada \cite{eizinger}. 

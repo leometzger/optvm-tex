@@ -19,9 +19,15 @@ rede, armazenamento dos dados, processamento, etc.
 \section{AMBIENTE}
 
 O ambiente utilizado foi uma máquina virtual utilizando \textbf{Ubuntu Server 18.04}
-com memória de \textbf{4.0GB} utilizando um processador \textbf{Intel i5}. As requisições
-são feitas através de uma rede \textit{bridge} da máquina física para a virtual.
-A escolha de um ambiente com VM é permitir o isolamento e reserva de recursos.
+com memória de \textbf{4.0GB} utilizando um processador \textbf{2,3 GHz Intel Core i5}. 
+As requisições são feitas através de uma rede \textit{bridge} da máquina física para a virtual.
+
+A escolha de um ambiente com VM é permitir o isolamento de recursos. Além disso,
+o ambiente é mantido de forma mais controlada, sendo assim, há uma melhor 
+consistencia dos testes feitos. Além do maior controle sobre o ambiente, é importante salientar 
+que o ambiente simulado está disponível nas nuvens comerciais na indústria, como AWS, AZURE e 
+etc. Sendo assim, caso uma máquina com as características da VM testada for utilizada, 
+o desempenho da API tende a ser o mesmo.
 
 \section{DADOS UTILIZADOS}
 A API do OptVM permite que seja feitas várias combinações de dados. As combinações
@@ -32,6 +38,22 @@ Na avaliação dos resultados, foram utilizados dados que simulam casos simples 
 complexos. O formato dos cenários utilizados é demonstrado na Tabela \ref{tab:testdata-info}
 
 \input{dados/tabelas/testdata-info.tex}
+
+Os dados utilizados foram gerados através de um código java. O código
+construído gerou em todos os casos 5 nuvens, sendo que, a quantidade de
+datacenters/hosts varia para ficar compatível com cada cenário. Para cada
+host, atribuiu-se 5 VMs.
+
+Para os testes conter os dados mais próximos da realidade quanto possível,
+foram pré-definidos alguns valores para atributos que são fixos, por exemplo,
+sistema operacional, memória RAM total, armazenamento total. Nestes casos, um dos valores
+pré-definidos foi selecionado aleatoriamente como valor para o atributo da entidade. 
+Nos casos onde o atributo é completamente variável, foi atribuido valores aleatórios para os 
+mesmos mantendo um intervalo condizente com a realidade, por exemplo, preço por armazenamento
+entre 0.1 e 1 (centavos).
+
+Além dos dados da nuvem, DCs e hosts, foi utilizado como padrão a busca de um subconjunto de
+3 hosts como sendo uma possível solução. 
 
 \section{MÉTRICAS UTILIZADAS}
 É muito comum uma API ser medida através de uma medida quantitativa de requisições 
@@ -49,7 +71,20 @@ aumentará o custo.
 
 O WRK é uma ferramenta construída em C utilizada para fazer \textit{benchmarking} de 
 aplicações HTTP. Com ela é possível fazer requisições concorrentes utilizando 
-múltiplos ou um único core.
+múltiplos ou um único core. Além disso, o WRK permite utilizar uma duração
+do teste, threads e conexões HTTP. Para o teste, foram utilizados os seguintes 
+valores para cada parâmetro:
+
+\begin{enumerate}
+  \item Conexões: 25
+  \item Threads: 1
+  \item Tempo de teste: 3 minutos
+\end{enumerate}
+
+Os parâmetros escolhidos, significam que uma thread está disparando requisições através 
+de 25 conexões para o serviço. Ou seja, o serviço recebe as requisições através de 25 conexões
+concorrentes. Já o tempo escolhido, foi de três minutos, para que não haja um viés no número
+de requisições por conta de alguma lentidão inicial, por exemplo, abertura de conexão com 
+banco de dados.
 
 \section{COMPARAÇÕES}
-@TODO

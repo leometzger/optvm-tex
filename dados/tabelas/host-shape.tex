@@ -7,6 +7,11 @@
             Nome & Tipo & Descrição \\ 
         \midrule
             \textit{id} & \textit{int} & Identificador do Host \\
+            \textit{bandwidth} & \textit{int} & Banda larga do Host \\
+            \textit{hops} & \textit{int} & Saltos de distância \\
+            \textit{requiredMemory} & \textit{int} & Memória requerida por VMs \\
+            \textit{hardware} & \textit{object} & Informações de hardware (RAM, \textit{Storage})\\
+            \textit{migratingVMs} & \textit{int} & VMs alocadas que estão migrando \\
             \textit{vms} & \textit{array} & VMs alocadas no Host \\
         \bottomrule
     \end{tabular}
