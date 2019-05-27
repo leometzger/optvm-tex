@@ -37,6 +37,97 @@ No primeiro momento serão mostrados os componentes que integram o sistema.
 Depois disso, técnicas e ferramentas utilizadas, após isso, será demonstrada a ideia do funcionamento do serviço e como ele é
 implementado.
 
+\section{COMUNICAÇÃO}
+Em termos gerais, uma API é uma interface de software que pode ser chamada e executada \cite{eizinger}. 
+
+Como o OptVM é um serviço que deve ser disponibilizado para uma arquitetura de 
+cliente-servidor de maneira distribuída, haviam três possíveis maneiras de implementá-lo, 
+que eram REST, SOAP e via chamadas RPC. 
+Para o desenvolvimento do OptVM foi escolhida a implementação utilizando o modelo REST. 
+A escolha desta opção se deu principalmente pelos seguintes motivos:
+
+\begin{enumerate}
+\item É um padrão arquitetural maduro;
+\item É agnóstico em relação a liguangens de programação;
+\item É flexivel em relação ao modelo de comunicação.
+\end{enumerate}
+
+Como o padrão arquitetural REST é agnostico em relação ao formato utilizado para fazer a comunicação dos dados. O \textit{econding} 
+dos dados pode ser feito da maneira que for mais conveniente para o usuário. No caso do OptVM é possível fazer a comunicação
+tanto no formato XML como no formato JSON.
+
+Isso é controlado pelo próprio cliente da aplicação. É controlado através do cabeçalho \textit{Accept}
+da requisição HTTP.
+
+\section{REPRESENTAÇÃO DO SERVIÇO}
+
+O padrão REST, definido por Fielding \cite{fielding}, sugere que se deve criar uma interface para interação com o sistema. 
+Essa interface é representada através de recursos, e a interação com esses recursos é feita através de requisições HTTP, 
+as quais contém verbos, o corpo da mensagem, cabeçalhos, entre outras informações. Além disso, o padrão arquitetural também sugere que 
+haja links para verificar outras informações e tomar ações sobre os recursos, complementando o HATEOAS.
+
+\subsection{Recursos}
+
+O OptVM trabalha em cima de 2 recursos, chamados políticas(\textit{policies}) e otimizações(\textit{optimizations}). 
+Ambos os recursos, trabalham juntos, porém, conseguem trabalhar de maneira independente.
+
+O recurso de políticas é responsável por gerenciar (criar, atualizar, deletar), as políticas
+cadastradas. As políticas são compostas por objetivos e restrições. 
+
+Já o recurso das otimizações, é responsável por gerenciar as otimizações executadas pelo sistema. Este recurso,
+além de fazer a otimização, também guarda um histórico, com informações mais detalhadas, 
+que podem ser consultadas após feitas as otimizações. Além do histórico, o recurso também guarda métricas e informações sobre
+a otimização em si, como tempo de execução, número de hosts de entrada/saída, por exemplo.
+
+Conforme REST propõe, são utilizados os verbos para realizar as operações correspondentes
+ao que eles se propõe a fazer. Então o verbo POST é utilizado para a criação de recursos,
+e o GET para a busca de recurso(s), DELETE para deleção e PUT para atualização.
+
+No geral, as APIs do OptVM estão organizadas da seguinte maneira:
+
+\input{dados/tabelas/optimization-resource.tex}
+
+\input{dados/tabelas/policy-resource.tex}
+
+Para cada API, existem campos que fazem parte do corpo da requisição e da resposta
+ao criar, buscar e atualizar algum recurso. Alguns campos são representados por entidades e 
+podem ter o mesmo formato, tanto na requisição, quanto na resposta, mudando apenas
+a obrigatoriedade de alguns atributos da entidade. Isso acontece
+com o recurso de \textit{policies} que é representado por uma entidade chamada \textit{Policy}.
+Esta entidade tem o seguinte formato:
+
+\input{dados/tabelas/policy-resource-shape.tex}
+
+Como os campos são arrays, eles possuem um conjunto de itens dentro deles. O tipo
+de objeto que está dentro do array não é primitivo, e também tem sua representação.
+A representação dos tipos de objetos, que são as restrições e os objetivos, são demonstrados
+pela Tabela \ref{tab:constraint-shape} e Tabela \ref{tab:objective-shape} respectivamente.
+
+\input{dados/tabelas/constraint-shape.tex}
+\input{dados/tabelas/objective-shape.tex}
+
+A representação da \textit{otimizations} é maior e possui mais subobjetos aninhados
+do que a representação do recurso \textit{policies}. Além disso, a otimização utiliza 
+um formato em que a requisição e a resposta não possuem o mesmo formato. A requisição
+é composta pelo formato das Tabelas \ref{tab:optimization-shape}, \ref{tab:cloud-shape},
+\ref{tab:datacenter-shape}, \ref{tab:host-shape} e \ref{tab:vm-shape}:
+
+\input{dados/tabelas/optimization-resource-shape.tex}
+\input{dados/tabelas/cloud-shape.tex}
+\input{dados/tabelas/datacenter-shape.tex}
+\input{dados/tabelas/host-shape.tex}
+\input{dados/tabelas/vm-shape.tex}
+
+A resposta, utiliza somente os identificadores das entidades envolvidas. Não
+é utilizado a representação completa dos hosts, sendo assim, é possível
+diminuir o corpo da mensagem. Porém, caso o usuário da API queira obter 
+o corpo completo dos itens selecionados, basta que ele utilize a chamada de 
+detalhes do recurso \textit{optimizations}. Para a resposta o formato das
+tabelas \ref{tab:response-shape} e \ref{tab:response-host}:
+
+\input{dados/tabelas/response-shape.tex}
+\input{dados/tabelas/response-host.tex}
+
 \section{COMPONENTES}
 O OptVM é dividido em dois principais componentes: O aplicador de constraints (\textit{constraint applyier})
 e o otimizador(\textit{optmizer}). Os dois componentes estão relacionados, porém são representados e 
@@ -122,11 +213,11 @@ da VM migrar para determinado host. Na Figura \ref{fig:constraintapplyier}, fora
 
 \section{OTIMIZADOR (OPTIMIZER)}
 
-Considerando que o cliente da API é uma federação de núvens computacionais.
-O \textit{optimizer} é responsável por otimizar a seleção dos hosts disponíveis nas núvens da federação,
+Considerando que o cliente da API é uma federação de nuvens computacionais.
+O \textit{optimizer} é responsável por otimizar a seleção dos hosts disponíveis nas nuvens da federação,
 para a VM que necessita migrar. O objetivo é alcançar um melhor subconjunto para a alocação da VM. 
-Além disso, a seleção desse subconjunto é selecionado atendendo os objetivos da \textbf{política} 
-selecionada para a otimização (conjunto de objetivos e restrições), escolhida pelo usuário.
+Além disso, a seleção desse subconjunto é selecionado atendendo os objetivos e restrições da \textbf{política} 
+selecionada para a otimização, escolhida pelo usuário.
 
 A otimização feita no OptVM faz uso de GAs. Os GAs fazem iterações sobre 
 uma população que é iniciada aleatoriamente no algoritmo. Para cada iteração,
@@ -251,97 +342,6 @@ N <= Cap\textsubscript{hosts}
 \label{eq:sobrecarga}
 \end{equation}
 
-\section{COMUNICAÇÃO}
-Em termos gerais, uma API é uma interface de software que pode ser chamada e executada \cite{eizinger}. 
-
-Como o OptVM é um serviço que deve ser disponibilizado para uma arquitetura de 
-cliente-servidor de maneira distribuída, haviam três possíveis maneiras de implementá-lo, 
-que eram REST, SOAP e via chamadas RPC. 
-Para o desenvolvimento do OptVM foi escolhida a implementação utilizando o modelo REST. 
-A escolha desta opção se deu principalmente pelos seguintes motivos:
-
-\begin{enumerate}
-\item É um padrão arquitetural maduro;
-\item É agnóstico em relação a liguangens de programação;
-\item É flexivel em relação ao modelo de comunicação.
-\end{enumerate}
-
-Como o padrão arquitetural REST é agnostico em relação ao formato utilizado para fazer a comunicação dos dados. O \textit{econding} 
-dos dados pode ser feito da maneira que for mais conveniente para o usuário. No caso do OptVM é possível fazer a comunicação
-tanto no formato XML como no formato JSON.
-
-Isso é controlado pelo próprio cliente da aplicação. É controlado através do cabeçalho \textit{Accept}
-da requisição HTTP.
-
-\section{REPRESENTAÇÃO DO SERVIÇO}
-
-O padrão REST, definido por Fielding \cite{fielding}, sugere que se deve criar uma interface para interação com o sistema. 
-Essa interface é representada através de recursos, e a interação com esses recursos é feita através de requisições HTTP, 
-as quais contém verbos, o corpo da mensagem, cabeçalhos, entre outras informações. Além disso, o padrão arquitetural também sugere que 
-haja links para verificar outras informações e tomar ações sobre os recursos, complementando o HATEOAS.
-
-\subsection{Recursos}
-
-O OptVM trabalha em cima de 2 recursos, chamados políticas(\textit{policies}) e otimizações(\textit{optimizations}). 
-Ambos os recursos, conseguem trabalhar de maneira independente.
-
-O recurso de políticas é responsável por gerenciar (criar, atualizar, deletar), as políticas
-cadastradas. As políticas são compostas por objetivos e restrições. 
-
-Já o recurso das otimizações, é responsável por gerenciar as otimizações executadas pelo sistema. O recurso 
-além de fazer a otimização, também guarda um histórico, com informações mais detalhadas, 
-que podem ser consultadas após feitas as otimizações. Além do histórico, o recurso também guarda métricas e informações sobre
-a otimização em si, como tempo de execução, número de hosts de entrada/saída, por exemplo.
-
-Conforme REST propõe, foram utilizados os verbos para realizar as operações correspondentes
-ao que eles se propõe a fazer. Então o verbo POST é utilizado para a criação de recursos,
-e o GET para a busca de recurso(s), DELETE para deleção e PUT para atualização.
-
-No geral, as APIs do OptVM ficaram organizadas da seguinte maneira:
-
-\input{dados/tabelas/optimization-resource.tex}
-
-\input{dados/tabelas/policy-resource.tex}
-
-Para cada API, existem campos que fazem parte do corpo da requisição e da resposta
-ao criar, buscar e atualizar algum recurso. Alguns campos são representados por entidades e 
-podem ter o mesmo formato, tanto na requisição, quanto na resposta, mudando apenas
-a obrigatoriedade de algumas propriedades da entidade. Isso acontece
-com o recurso de \textit{policies}. É representado por uma entidade chamada \textit{Policy}.
-E a mesma tem o seguinte formato:
-
-\input{dados/tabelas/policy-resource-shape.tex}
-
-Como os campos são arrays, eles possuem um conjunto de itens dentro deles. O tipo
-de objeto que está dentro do array não é primitivo, e também tem sua representação.
-A representação dos tipos de objetos que são as restrições e os objetivos, são demonstrados
-pela Tabela \ref{tab:constraint-shape} e Tabela \ref{tab:objective-shape} respectivamente.
-
-\input{dados/tabelas/constraint-shape.tex}
-\input{dados/tabelas/objective-shape.tex}
-
-A representação da \textit{otimizations} é maior e possui mais subobjetos aninhados
-do que a represetnação do recurso \textit{policies}. Além disso, a otimização utiliza 
-um formato em que a requisição e a resposta não possuem o mesmo formato. A requisição
-é composta pelo formato das Tabelas \ref{tab:optimization-shape}, \ref{tab:cloud-shape},
-\ref{tab:datacenter-shape}, \ref{tab:host-shape} e \ref{tab:vm-shape}:
-
-\input{dados/tabelas/optimization-resource-shape.tex}
-\input{dados/tabelas/cloud-shape.tex}
-\input{dados/tabelas/datacenter-shape.tex}
-\input{dados/tabelas/host-shape.tex}
-\input{dados/tabelas/vm-shape.tex}
-
-A resposta, utiliza somente os identificadores das entidades envolvidas. Não
-é utilizado a representação completa dos hosts, sendo assim, é possível
-diminuir o corpo da mensagem. Porém, caso o usuário da API queira obter 
-o corpo completo dos itens selecionados, basta que ele utilize a chamada de 
-detalhes do recurso \textit{optimizations}. Para a resposta o formato das
-tabelas \ref{tab:response-shape} e \ref{tab:response-host}:
-
-\input{dados/tabelas/response-shape.tex}
-\input{dados/tabelas/response-host.tex}
-
 \section{FUNCIONAMENTO DO SERVIÇO}
 
 A utilização do serviço, sugere que seja seguido um fluxo. Não é obrigatório
@@ -358,7 +358,12 @@ para fazer uma otimização, é seguido o seguinte fluxo:
  \item Obtenção do subconjunto de hosts otimização.
 \end{enumerate}
 
-\input{dados/figuras/request-response-optvm.tex}
+\begin{figure}[!htb]
+  \centering
+  \caption{Exemplo de aplicação das constraints}
+  \includegraphics[width=1\textwidth]{./dados/figuras/overview.png}
+  \label{fig:overview}
+\end{figure}
 
 Apesar do caso de uso básico, é possível utilizar a API de maneiras diferentes,
 e fazer as combinações que forem mais úteis para o usuário. Por exemplo, é possível
@@ -420,18 +425,32 @@ também para o XML:
 }
 \end{lstlisting}
 
-E a resposta terá o seguinte formato:
+Quando o OptVM recebe uma requisição de otimização, o seguinte fluxo é seguido
+para processar a requisição e retornar as melhores opções de seleção de host
+para o usuário:
+
+\begin{figure}[!htb]
+  \centering
+  \caption{Exemplo de aplicação das constraints}
+  \includegraphics[width=0.5\textwidth]{./dados/figuras/fluxograma-otimizacao.png}
+  \label{fig:fluxograma-otimizacao}
+\end{figure}
+
+E a resposta tem o seguinte formato:
 
 \begin{lstlisting}[language=json,firstnumber=1]
 {
   "id": 1,
   "policyId": 2,
   "hosts": [
-    {
-      "cloud": 1,
-      "datacenter": 2,
-      "host": 1
-    }, 
+    "option_1": [
+      {
+        "cloud": 1,
+        "datacenter": 2,
+        "host": 1
+      },
+      ...
+    ] 
     ...
   ],
   "policy": "http://host.domain/api/policies/2",
@@ -442,7 +461,8 @@ E a resposta terá o seguinte formato:
 
 Apesar do exemplo estar mostrando arrays com apenas um item,
 tanto para a requisição como para a resposta, muito provavelmente 
-haverá outros itens.
+haverá outras opções. Cada opção contém um subconjunto com o tamanho
+N escolhido pelo usuário da API. 
 
 \section{TECNOLOGIAS UTILIZADAS}
 

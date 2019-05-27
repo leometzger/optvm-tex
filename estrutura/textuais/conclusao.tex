@@ -3,26 +3,38 @@
 A otimização da seleção de hosts na migração de máquinas virtuais
 foi o objetivo da solução deste trabalho. Com o crescimento da 
 utilização de computação em nuvem, esse é um tipo de problema em que
-a indústria começa a se deparar. A otimização na utilização de recursos 
-computacionais tem uma importância por diminuir o custo para empresas,
-melhorar o consumo de energia, entre outros fatores que fazem com que 
-o trabalho seja útil.
+a indústria se depara. A otimização na utilização de recursos 
+computacionais tem uma certa importância, por diminuir o custo para empresas,
+melhorar o consumo de energia, entre outros fatores que fazem com que este
+campo de pesquisa mereça atenção.
 
 Neste trabalho a solução foi desenvolvida através de um serviço utilizando REST 
-como estilo arquitetural e algoritmos genéticos para a otimização. 
+como estilo arquitetural que utiliza algoritmos genéticos para fazer uma otimização, 
+além de uma solução própria para a seleção de hosts removendo os que não atendem
+certas restrições. 
 O trabalho fornece uma solução genérica, onde, outros trabalhos que 
 envolvam migração de máquinas virtuais e que envolvam uma ou mais núvens, 
-possam fazer uso da API construída. 
+possam fazer uso da API construída, isso tanto em cenários pequenos como em 
+cenários maiores.
 
-@TODO Apresentar resultados
-@TODO Falar sobre resultados
+Os resultados obtidos em relação a performance da API foram satisfatórios.
+Os mesmos mostram que o \textit{webservice} escala até certo ponto, diminuindo
+seu desempenho conforme aumenta a complexidade do cenário. Inclusive, um dos
+diferenciais do OptVM é esta flexibilidade na utilização, apesar da degradação 
+do desempenho, continua atendendo.
+
+O trabalho também mostra que, a seleção de hosts para a migração de uma VM,
+por se tratar de ser uma tarefa difícil, 
+pode valer a pena atribuir o trabalho a um \textit{webservice}, ao invés de lidar 
+juntamente com a complexidade de gerenciar o ambiente (hosts/DCs/nuvens). Isso permite
+que as responsabilidades sejam separadas mais granularmente.
 
 \section{TRABALHOS FUTUROS}
 \label{sec:trabalhosFuturos}
 
 Este trabalho permitiu ampliar o campo de visão de soluções para
 o problema de otimização de migração de VMs, especialmente na seleção
-de hosts. É possível fazer melhores versões ou evoluir a partir deste trabalho.
+de hosts. É possível fazer melhores versões ou evoluir este trabalho.
 
 \subsection{Pesquisas em restrições para o ambiente de núvens federadas}
 
@@ -52,6 +64,3 @@ restrições e objetivos da política?"}. A partir desse questionamento, uma pos
 pergunta para o problema generalizado, levando em considerações os efeitos colaterais,
 seria: \textbf{"Qual é a melhor disposição que a federação pode ter considerando
 determinado cenário?"}.
- 
-\section{CONSIDERAÇÕES FINAIS}
-@TODO
