@@ -25,23 +25,26 @@ No OptVM, os objetivos são traduzidos para funções objetivo, do problema de o
 como funções matemáticas que representam o objetivo da otimização.
 
 Como a escolha e parametrização das restrições e funções objetivo da otimização são escolhidos pelo usuário da API,
-Foi criado um recurso que representa a configuração e parametrização das \textbf{restriçoes} e \textbf{objetivos de otimização},
-e para este recurso foi dado o nome de \textbf{política}. 
+foi criado um recurso que representa essa configuração e parametrização. Para este recurso foi dado o nome de \textbf{política}. 
 
 O OptVM busca ser uma solução caixa preta, onde, o usuário não necessita saber nada sobre o funcionamento interno, 
 algoritmos utilizados, etc. Basta utilizar as \textit{Application Programming Interfaces} (APIs) para fazer uso de suas funcionalidades.
 A intenção é que o usuário não precise entender sobre como as coisas são feitas internamente para obter as vantagens do uso do OptVM.
 
+O OptVM é dividido em dois principais componentes: O aplicador de constraints (\textit{constraint applyier})
+e o otimizador(\textit{optmizer}). Os dois componentes estão relacionados, porém são representados e 
+aplicados separadamente. 
+
 Neste capítulo, serão apresentados aspectos gerais em relação a implementação e uso do OptVM. 
-No primeiro momento serão mostrados os componentes que integram o sistema. 
-Depois disso, técnicas e ferramentas utilizadas, após isso, será demonstrada a ideia do funcionamento do serviço e como ele é
-implementado.
+No primeiro momento serão mostrados os dois componentes que integram o sistema. 
+Depois disso, técnicas e ferramentas utilizadas, após isso, será demonstrada a ideia do funcionamento 
+do serviço e como ele é implementado.
 
 \section{COMUNICAÇÃO}
 Em termos gerais, uma API é uma interface de software que pode ser chamada e executada \cite{eizinger}. 
 
 Como o OptVM é um serviço que deve ser disponibilizado para uma arquitetura de 
-cliente-servidor de maneira distribuída, haviam três possíveis maneiras de implementá-lo, 
+cliente-servidor de maneira distribuída, haviam três principais maneiras de implementá-lo, 
 que eram REST, SOAP e via chamadas RPC. 
 Para o desenvolvimento do OptVM foi escolhida a implementação utilizando o modelo REST. 
 A escolha desta opção se deu principalmente pelos seguintes motivos:
@@ -54,10 +57,9 @@ A escolha desta opção se deu principalmente pelos seguintes motivos:
 
 Como o padrão arquitetural REST é agnostico em relação ao formato utilizado para fazer a comunicação dos dados. O \textit{econding} 
 dos dados pode ser feito da maneira que for mais conveniente para o usuário. No caso do OptVM é possível fazer a comunicação
-tanto no formato XML como no formato JSON.
-
-Isso é controlado pelo próprio cliente da aplicação. É controlado através do cabeçalho \textit{Accept}
-da requisição HTTP.
+tanto no formato XML como no formato JSON. O \textit{encoding}
+é controlado pelo próprio cliente da aplicação. 
+Isso é feito através de cabeçalhos da requisição HTTP.
 
 \section{REPRESENTAÇÃO DO SERVIÇO}
 
@@ -127,11 +129,6 @@ tabelas \ref{tab:response-shape} e \ref{tab:response-host}:
 
 \input{dados/tabelas/response-shape.tex}
 \input{dados/tabelas/response-host.tex}
-
-\section{COMPONENTES}
-O OptVM é dividido em dois principais componentes: O aplicador de constraints (\textit{constraint applyier})
-e o otimizador(\textit{optmizer}). Os dois componentes estão relacionados, porém são representados e 
-aplicados separadamente. 
 
 \section{APLICADOR DE CONSTRAINTS (CONSTRAINT APPLYIER)}
 
@@ -303,20 +300,40 @@ energ(h_i ) =  ((p\textsubscript{max}_i - p\textsubscript{min}_i) * U\textsubscr
 Para a migração de uma VM occorer, algumas etapas devem ser concluídas, são elas: 
 a detecção de uma migração, a transferência da VM para o \textit{host} de destino 
 e a instalação no mesmo. Esta OF está interessada em escolher um \textit{host} que 
-sobrecarregue o mínimo possível a última etapa da migração. 
+sobrecarregue o mínimo possível a última etapa da migração. Uma VM pode ser considerada
+instalada no host de destino, quando ela estiver configurada e pronta para continuar o seu
+uso. Esta medida, neste trabalho, é chamada de Tempo de Reconfiguração ($ t\textsubscript{reconf} $).
+
+Outra medida que está ligada ao tempo de reconfiguração é a capacidade do host. Esta 
+medida é dada pelo produto do número de núcleos de processamento pelo MIPS (Milhares de
+instruções por segundo). Esta medida pode ser observada na Equação \ref{eq:cap}:
 
 cap:
 \begin{equation}
 \begin{split}
 cap\textsubscript{h}_i = \sum_{k=1}^{Npes}(pe_k * mips_k)
 \end{split}
+\label{eq:cap}
 \end{equation}
 
+O tempo de fixação de uma VM no destino é obtido através da quantidade de memória 
+já alocada para as VMs do host de destino $\sum_{j=1,i \neq j}^{N} M_j$ dividido pela
+largura de banda do host $larg\textsubscript{ban}({h}\textsubscript{i})$. Estas variáveis 
+são utilizadas por interferirem diretamente no tempo de fixação da VM.
+Sendo assim a Equação \ref{eq:tfix} descreve o tempo de fixação.
 
 \begin{equation}
 t\textsubscript{fix}\textsubscript{(vm}_i\textsubscript{)} = \sum_{j=1,i \neq j}^{N} M_j/larg\textsubscript{ban}({h}\textsubscript{i})
 \label{eq:tfix} 
 \end{equation}
+
+Com hipervisores como \textit{Xen} e \textit{VMWare} é possível fazer migração a quente.
+Para este tipo de migração ocorrer, é necessário que as páginas sujas da VM sejam transferidas.
+Para isso acontecer, é necessário que haja um certo número de iterações e essas iterações deduzem
+o número de páginas sujas da VM. Sendo assim, tanto o número de iterações ($ iter $)
+quanto a quantidade de páginas sujas ($ v\textsubscript{dr} $) são significativos para 
+o tempo de reconfiguração. Sendo assim, a equação \ref{eq:reconf} representa a OF 
+de tempo de reconfiguração.
 
 \begin{equation}
 \begin{split}
@@ -328,11 +345,25 @@ t\textsubscript{reconf}\textsubscript{(vm}_i\textsubscript{)} = \dfrac{ (v\texts
 
 \subsection{Minimização da sobrecarga da migração}
 
+Segundo \cite{anand}, para minimizar o tráfego que uma migração gera 
+é necessário diminuir a quantidade de dados a ser transferida. Porém,
+quantificar a sobrecarga da migração é uma operação complexa por conta 
+das diferentes variáveis que um \textit{host} tem. Para resolver este problema 
+\cite{anand} identificaram que uma solução é atribuir pesos para recursos do 
+host, atribuindo um peso maior para os recursos que são considerados mais impactantes
+na sobrecarga e menor para menos impactantes. Esses pesos são distribuidos 
+da seguinte maneira: 0,8 para banda larga; 0,6 para armazenamento; 0,4 para a memória 
+e 0,1 para o CPU.
+
 \begin{equation}
 sob\textsubscript{mig}(h_i) = \sum_{i=1}^{m}r_i * w_i
 \label{eq:sobHi}
 \end{equation}
 
+Como diferentes \textit{hosts} participam da migração, todos os 
+\textit{hosts} devem ser considerados na equação \ref{eq:sobrecarga} de 
+sobrecarga da migração. No OptVM, para efeito de simplicidade, foi considerado
+que somente o host de origem e host de destino estão envolvidos na migração.
 
 \begin{equation}
 \begin{split}
@@ -376,13 +407,15 @@ criação da política, pode ser utilizado o seguinte formato:
 
 \begin{lstlisting}[language=json,firstnumber=1]
 {
-  "objectives": [{"id": "MIN_ENERGY_CONSUMPTION"}, {"id": "MIN_INSTALLATION_TIME"}],
-  "constraints": [{
-    "type": "Cost",
-    "params": {
-      "max_per_memory": 0.35
+  "objectives": ["MIN_ENERGY_CONSUMPTION", "MIN_INSTALLATION_TIME"],
+  "constraints": [
+    {
+      "type": "Cost",
+      "params": {
+        "max_per_memory": 0.35
+      }
     }
-  }]
+  ]
 }
 \end{lstlisting}
 
@@ -397,6 +430,8 @@ como detalhes da otimização através da URI \textit{/details}.
 No exemplo, a criação de um recurso de otimização deve-se ser utilizado o seguinte formato, 
 para o corpo da requisição. Está sendo utilizado o formato JSON, porém, o mesmo se aplica 
 também para o XML:
+
+
 
 \begin{lstlisting}[language=json,firstnumber=1]
 {
@@ -425,9 +460,9 @@ também para o XML:
 }
 \end{lstlisting}
 
-Quando o OptVM recebe uma requisição de otimização, o seguinte fluxo é seguido
-para processar a requisição e retornar as melhores opções de seleção de host
-para o usuário:
+Quando o OptVM recebe uma requisição de otimização, o fluxo da figura \ref{fig:fluxograma-otimizacao}
+é seguido para processar a requisição e retornar as melhores opções de seleção de host
+para o usuário.
 
 \begin{figure}[!htb]
   \centering
@@ -454,7 +489,6 @@ E a resposta tem o seguinte formato:
     ...
   ],
   "policy": "http://host.domain/api/policies/2",
-  "details": "http://host.domain/optimizations/1/details",
   "metrics": "http://host.domain/optimizations/1/metrics"
 }
 \end{lstlisting}
