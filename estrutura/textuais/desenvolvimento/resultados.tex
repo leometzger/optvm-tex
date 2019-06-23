@@ -1,27 +1,38 @@
 \chapter{RESULTADOS}
 \label{chap:results}
 
-Este capítulo é dedicado aos resultados obtidos com testes
+Este capítulo é dedicado à avaliação dos resultados obtidos com testes
 feitos utilizando a solução desenvolvida no trabalho. Os testes
-utilizaram um ambiente de VM para que os testes possam ser reproduzidos 
-mais fácilmente. Foram utilizadas diferentes métricas para avaliar
+utilizaram um ambiente de VM para que os testes possam ser reproduzidos. 
+Foram utilizadas diferentes métricas para avaliar
 o comportamento da API. Além das diferentes métricas, os dados inseridos 
 também possuem diferentes formatos e valores. Isso foi feito para que 
-seja percebido o comportamento da API em diferentes cenários, assim como
-avaliar se o comportamento é alterado drásticamente ou mantem seu comportamento
+seja avaliado o comportamento da API em diferentes cenários, o objetivo é perceper
+se o comportamento é alterado considerávelmente ou mantem seu comportamento
 mesmo em casos extremos.
 
-É importante definir bem como a API se comporta em cenários diferentes, pois,
-dependendo aonde a mesma estiver instalada, cada requisição gera um custo e este custo 
+Esta avaliação é importante, pois,
+dependendo aonde a API estiver instalada, cada requisição gera um custo e este custo 
 deve ser conhecido. Por exemplo, se a API estiver hospedada em nuvem, cada requisição tem 
 um custo, seja ele por tráfego de rede, armazenamento dos dados, processamento, etc. 
 As métricas utilizadas buscam auxiliar na decisão de utilização da API.
+
+Para a avaliação da API, as métricas utilizadas foram a quantidade de requisições por segundo (RPS)
+que a API atende, tamanho do payload (PAYsize) e tempo de execução na fase de otimização (OTE).
 
 Os testes realizados foram aplicados somente no recurso de otimizações,
 que é a seleção de \textit{hosts}. Apesar da API ter outros recursos, como o de políticas,
 este recurso é apenas um suporte para flexibilizar o uso das migrações. O problema 
 que o trabalho se propõe a resolver envolve somente a etapa de criação de uma
-otimização. Sendo assim, este é o cenário que é avaliado.
+otimização. Sendo assim, este é o cenário que é avaliado. Os testes utilizaram um 
+ambiente controlado (uma VM com recursos limitados/conhecidos) e utilizaram ferramentas para 
+adquirir os dados relativos ao desempenho da API.
+
+Após os testes, foi analisado os dados adquiridos e obtido conclusões a partir deles.
+Nas próximas seções, é detalhado como foi montado o ambiente, 
+como foi implementada a maneira de obtenção de dados para os testes,
+ferramentas utilizadas para obter as métricas e por último os resultados das comparações 
+para a obtenção das conclusões.
 
 \section{AMBIENTE}
 
@@ -36,10 +47,66 @@ que o ambiente simulado está disponível nas nuvens comerciais na indústria, c
 etc. Sendo assim, caso uma máquina com as características da VM testada for utilizada, 
 o desempenho da API tende a ser o mesmo.
 
+\section{MÉTRICAS UTILIZADAS}
+É muito comum uma API ser medida através de uma medida quantitativa das requisições 
+por segundo (RPS) que ela consegue atender. O número de requisições 
+varia de aplicação para aplicação, e isso depende da tecnologia utilizada, 
+arquitetura do sistema, se há consulta em banco de dados ou não, algoritmos utilizados, etc.
+Esta métrica define se a utilização de um serviço é viável em relação a quantidade de consumidores ou
+quantidade de utilização, ou seja, se atende as necessidades de uso do consumidor do serviço. 
+Através desta métrica é possível identificar gargalos na utilização. Para esta métrica, foi utilizada 
+a ferramenta WRK. O WRK é uma ferramenta \textit{open-souce} construída em C utilizada 
+para fazer \textit{benchmarking} de aplicações HTTP. Com ela é possível fazer requisições 
+concorrentes utilizando múltiplos ou um único core. Além disso, o WRK permite obter uma duração
+do teste, threads e conexões HTTP.
+
+Além da métrica de requisições por segundo, outro aspecto importante na utilização de API
+é o tamanho do \textit{payload}. O payload, muitas vezes é atribuido um custo por 
+tráfego da máquina, e por processamento e armazenamento, sendo assim, quanto maior
+o payload, mais tráfego, processamento e armazenamento ele gerará, consequentemente,
+aumentará o custo. Esta métrica pode identificar possíveis erros em relação 
+ao modelamento da API, ou seja, a API modelada de uma maneira mais otimizada, utilizando os dados
+de maneira diferente, pode obter um \textit{payload} menor.
+
+O OptVM salva o tempo de execução de cada etapa da criação de uma otimização, que são, 
+a aplicação das constraints e MOO. Por ser a fase mais significativa, em relação ao processamento,
+na avaliação dos resultados quantitativos, foi considerada a média de tempo
+de execução da MOO. A esta métrica foi dado o nome de \textit{optimization execution time}(OET).
+Esta métrica permite identificarmos o impacto da fase de MOO na requisição.
+
+\input{dados/tabelas/metrics.tex}
+
+\subsection{WRK}
+
+Como o resultado de um teste utilizando o WRK consegue nos trazer algumas informações 
+sobre a API, como RPS, transferência por segundo, entre outras. Das informações que
+o WRK nos traz, as escolhidas e o seu respectivo motivo foram:
+
+\begin{enumerate}
+  \item RPS: Medir a velocidade do serviço;
+  \item Respostas com status de insucesso: Medir a confiabilidade. 
+\end{enumerate}
+
+Para o teste de RPS da API, foram utilizados os seguintes valores para os parâmetros do WRK:
+
+\begin{enumerate}
+  \item Conexões: 25
+  \item Threads: 1
+  \item Tempo de teste: 3 minutos
+\end{enumerate}
+
+Os parâmetros escolhidos para a realização dos testes, significam que uma thread está disparando requisições através 
+de 25 conexões para o serviço ou seja, o serviço recebe as requisições através de 25 conexões
+concorrentes. Já o tempo escolhido, foi de três minutos, para que não haja um viés no número
+de requisições por conta de alguma lentidão inicial, por exemplo, pela abertura de conexão com 
+banco de dados.
+
 \section{DADOS UTILIZADOS}
-A API do OptVM permite que seja feitas várias combinações de dados. As combinações
+A API do OptVM permite que sejam feitas várias combinações de dados. As combinações
 podem variar em relação à restrições utilizadas, objetivos da otimização, quantidade
-de hosts, nuvens e datacenters envolvidos, entre outros. 
+de hosts, nuvens e datacenters envolvidos, entre outros. Isso é importante pois 
+permitem avaliar diferentes cenários, ou seja, diferentes combinações, simulando diferentes
+casos de uso da API.
 
 Na avaliação dos resultados, foram utilizados dados que simulam casos simples (utilizando poucos
 hosts, restrições e objetivos) e casos mais complexos (utilizando mais hosts, restrições e objetivos). 
@@ -56,66 +123,14 @@ Para os testes conter os dados mais próximos da realidade quanto possível,
 foram pré-definidos alguns valores para atributos que são fixos, por exemplo,
 sistema operacional, memória RAM total, armazenamento total. Nestes casos, um dos valores
 pré-definidos foi selecionado aleatoriamente como valor para o atributo da entidade. 
-Nos casos onde o atributo é completamente variável, foi atribuido valores aleatórios para os 
+Nos casos onde o atributo é completamente variável, foram atribuídos valores aleatórios para os 
 mesmos mantendo um intervalo condizente com a realidade, por exemplo, preço por armazenamento
 entre 0.1 e 1 (centavos).
 
-Como o OptVM permite escolher o tamanho do subconjunto de \textit{hosts} que quer obter,
+Como o OptVM permite escolher o tamanho do subconjunto de \textit{hosts} que quer obter como resposta,
 além dos dados da nuvem, DCs e hosts, foi utilizado como padrão a busca de um subconjunto de
-3 hosts como sendo uma possível solução. 
-
-\section{MÉTRICAS UTILIZADAS}
-É muito comum uma API ser medida através de uma medida quantitativa de requisições 
-por segundo (RPS) que ela consegue atender. O número de requisições 
-varia de aplicação para aplicação, e isso depende da tecnologia utilizada, 
-arquitetura do sistema, se há consulta em banco de dados ou não, algoritmos utilizado, etc.
-Esta métrica define se a utilização de um serviço é viável em relação a quantidade de consumidores ou
-quantidade de utilização, ou seja, se atende as necessidades de uso do consumidor do serviço. 
-Através desta métrica é possível identificar gargalos na utilização.
-
-Além da métrica de requisições por segundo, outro aspecto importante na utilização de API
-é o tamanho do \textit{payload}. O payload, muitas vezes é atribuido um custo por 
-tráfego da máquina, e por processamento e armazenamento, sendo assim, quanto maior
-o payload, mais tráfego, processamento e armazenamento ele gerará, consequentemente,
-aumentará o custo. Esta métrica pode identificar possíveis erros em relação 
-ao modelamento da API, ou seja, a API modelada de uma maneira mais otimizada, utilizando os dados
-de maneira diferente, pode obter um \textit{payload} menor.
-
-\subsection{WRK}
-
-O WRK é uma ferramenta construída em C utilizada para fazer \textit{benchmarking} de 
-aplicações HTTP. Com ela é possível fazer requisições concorrentes utilizando 
-múltiplos ou um único core. Além disso, o WRK permite utilizar uma duração
-do teste, threads e conexões HTTP. 
-
-O resultado de um teste utilizando o WRK consegue nos trazer algumas informações 
-sobre a API, como RPS, transferência por segundo, entre outras. Das informações que
-o WRK nos traz, as escolhidas e o seu respectivo motivo foram:
-
-\begin{enumerate}
-  \item RPS: Medir a velocidade do serviço;
-  \item Respostas com status de insucesso: Medir a confiabilidade. 
-\end{enumerate}
-
-Para o teste, foram utilizados os seguintes valores para os parâmetros do WRK:
-
-\begin{enumerate}
-  \item Conexões: 25
-  \item Threads: 1
-  \item Tempo de teste: 3 minutos
-\end{enumerate}
-
-Os parâmetros escolhidos para a realização dos testes, significam que uma thread está disparando requisições através 
-de 25 conexões para o serviço ou seja, o serviço recebe as requisições através de 25 conexões
-concorrentes. Já o tempo escolhido, foi de três minutos, para que não haja um viés no número
-de requisições por conta de alguma lentidão inicial, por exemplo, pela abertura de conexão com 
-banco de dados.
-
-Além das métricas do WRK e o tamanho do payload, o OptVM salva o tempo de execução de cada
-etapa da criação de uma otimização, que são, a aplicação das constraints e MOO. 
-Por ser a fase mais significativa, na avaliação dos resultados quantitativos, foi considerada a média de tempo
-de execução da MOO. A esta métrica foi dado o nome de \textit{optimization execution time}(OET).
-Esta métrica permite identificarmos o impacto da fase de MOO na requisição.
+3 hosts como sendo uma possível solução. Essa quantidade de hosts foi escolhida pois em um ambiente 
+real, caso seja escolhido um único host, o mesmo pode não estar disponível no momento da migração.
 
 \section{COMPARAÇÕES}
 
@@ -126,17 +141,23 @@ Para as métricas, os seguintes resultados foram obtidos:
 
 \input{dados/tabelas/results.tex}
 
-A partir destes resultados algumas conclusões podem ser tiradas:
+Na comparação dos cenários, pôde ser observado os resultados para os diferentes cenários:
+o \textbf{Super Simples}, \textbf{Simples}, \textbf{Médio} e \textbf{Difícil}. 
+Foram encontradas significativas diferenças nos resultados. A partir destes resultados 
+algumas conclusões podem ser tiradas:
 
 \begin{enumerate}
-  \item Quando a requisição fica maior, eventuais erros começam a ocorrer;
+  \item Quando a requisição fica maior, eventuais erros começam a ocorrer, como nos cenários 
+  \textbf{Médio e difícil};
   \item A quantidade de RPS diminui significativamente por causa do tamanho do \textit{payload};
-  \item A fase de MOO não é afetada drasticamente, apesar do significativo aumento de \textit{hosts}.
+  \item A fase de MOO não é afetada drasticamente nos diferentes cenários, apesar do 
+  significativo aumento de \textit{hosts}. Isso significa que não é o gargalo do serviço.
 \end{enumerate}
 
 Quando comparado ao número de requisições de outros \textit{webservices}, a quantidade de RPS
 é relativamente baixa. Porém, para o propósito deste \textit{webservice} a quantidade pode ser
-suficiente, pois, como a migração é um evento custoso computacionalmente, o ideal é evitá-la.
+suficiente, pois, como a migração é um evento custoso computacionalmente, e o ideal é evitá-la, 
+consequentemente, poucas requisições são feitas e busca-se diminuir a quantidade ao decorrer do tempo.
 
 Um dos diferenciais do OptVM é a flexibilidade que ele dá ao usuário da API para configurar
 a otimização da maneira que melhor se adequar ao seu problema, através das políticas e de 

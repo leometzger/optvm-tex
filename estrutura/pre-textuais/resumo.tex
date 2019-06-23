@@ -7,9 +7,9 @@ A migração de máquinas virtuais (VMs) é uma necessidade em ambientes
 de federação de nuvens computacionais. Isso acontece porque as empresas
 buscam utilizar o melhor possível os recursos disponíveis em sua infraestrutura.
 Porém, gerenciar as migrações de uma federação não é uma tarefa simples. O gerenciamento
-envolve algumas etapas, como: identificar que uma VM deve ser migrada, selecionar um
-destino que seja adequado e efetuar a migração. Este trabalho busca servir de apoio 
-para a segunda etapa, a seleção de um destino para a VM. A escolha de hosts de destino pode conter
+envolve pelo menos três etapas, como: identificar que uma VM deve ser migrada, determinada
+qual VM deve ser migrada e achar um destino para a VM. Este trabalho serve como apoio 
+para a terceira etapa, a seleção de um destino para a VM. A escolha de hosts de destino pode conter
 diferentes variáveis, restrições e objetivos. Tendo isso em mente, este trabalho apresenta uma solução
 baseada em \textit{webservice} que serve de apoio para a migração, com o foco na seleção 
 de \textit{hosts} de destino para uma VM. Como a escolha de um destino envolve 
@@ -17,7 +17,7 @@ vários objetivos, o trabalho utiliza uma classe de algoritmos de otimização b
 múltiplos objetivos para fazer a escolha do host. O trabalho também fornece uma série de restrições
 que servem como um filtro dos hosts que não atendem a regras de negócio específicas do usuário.
 Além disso, utiliza padrões conhecidos para a construção do \textit{webservice}.  
-A solução proposta tem uma performance aceitável e é bastante flexível, permitindo que o 
+A solução proposta também é bastante flexível, permitindo que o 
 usuário do \textit{webservice} configure as restrições de acordo com sua necessidade e 
 selecione somente os objetivos de interesse.
 

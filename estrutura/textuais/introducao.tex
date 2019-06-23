@@ -1,7 +1,7 @@
 \chapter{INTRODUÇÃO}
 \label{chap:introducao}
 
-Com a evolução da computação em nuvem, surgiram necessidades cada vez maiores de utilizar ao 
+Com a evolução da computação em nuvem, surgiram necessidades de utilizar ao 
 máximo o poder dos computadores sem sobrecarregar os mesmos, e os componentes que o fazem funcionar,
 assim como o uso de energia. Estas necessidades surgem para atender 
 requisitos de diminuição de custos, aumento de desempenho, diminuição no consumo de energia,
@@ -24,7 +24,7 @@ de organizar a nuvem de uma maneira ou de outra, envolvem os objetivos de quem e
  realocação de VM e é feita através de uma migração. 
  Por esse motivo, existem pesquisas que buscam maneiras de otimizar a alocação e realocação de VMs.
 
-A migração de uma VM envolve algumas etapas, como, a descoberta da necessidade de migração, 
+A migração de uma VM envolve três etapas: a descoberta da necessidade de migração, 
 a escolha de uma VM a ser migrada e a escolha de um host de destino para essa VM.
 A etapa em que este trabalho está interessado é a escolha de um host de destino para a VM. 
 Considerando que uma migração seja considerada cara do ponto de vista computacional, 
@@ -38,7 +38,7 @@ Considerando uma federação de nuvens computacionais, a seleção de um host pa
 uma tarefa considerada difícil. Existem diversas formas de realizar uma tarefa assim, e uma delas é:
 utilizando algoritmos de otimização. É comum que os problemas de otimização atuais busquem otimizar
 mais que um objetivo. Por esse motivo existem problemas que são resolvidos por \textit{Multiobjective
-optimization algorithms} MOO. Este é o caso do problema da seleção de \textit{hosts}.
+optimization} MOO. Este é o caso do problema da seleção de \textit{hosts}.
 
 Este trabalho tem papel de servir como apoio para a migração de VMs em ambientes de computação em nuvem. 
 Isto é feito através de uma abordagem em que um gerenciador de nuvem, que precise migrar uma VM, possa 
@@ -61,19 +61,25 @@ Para o desenvolvimento desse trabalho, foi feita pesquisa exploratória em poss�
 soluções para resolução do problema e após a etapa de exploração, foram feitas
 avaliações quantitativas da aplicação da solução.
 
-Existem muitas ferramentas tanto para a construção de \textit{webservices} quanto
-para a otimização multiobjetivo. Para o desenvolvimento de uma solução, devem 
-ser escolhidas as ferramentas que melhor se adequam para resolver o problema em questão.
+Existem várias ferramentas, tanto para a construção de \textit{webservices} quanto
+para a otimização multiobjetivo. Para o desenvolvimento de uma solução, 
+são escolhidas ferramentas viáveis para resolver o problema em questão.
 Na fase de exploração, diversas referências bibliográficas foram utilizadas para 
 a busca e avaliação de ferramentas disponíveis para utilizar no desenvolvimento. 
 
+As ferramentas escolhidas foram: para o \textit{webservice}, 
+a utiliização do padrão arquitetural REST, pois o padrão disponibiliza
+uma interface padrão para a interação com o serviço e é um padrão maduro. Já para 
+a otimização, foi escolhido utilizar algoritmos genéticos (GAs), pois eles permitem 
+fazer a MOO e são genéricos sendo assim, atendem os requisitos de otimização do problema.
+
 Após as ferramentas escolhidas, foi desenvolvido a solução. A criação do \textit{webservice} foi 
 feito em JAVA, porém, qualquer linguagem de programação que consiga fazer requisições HTTP.
-Por esse motivo, foi feita uma avalação qualitativa dos resultados obtidos com a solução.
-Os resultados foram quantificados e avaliados com diferentes quantidades de \textit{clouds/hosts},
+Por esse motivo, foi feita uma avalação quantitativa dos resultados obtidos com a solução.
+Os resultados foram quantificados e avaliados com diferentes quantidades de \textit{clouds e hosts},
 utilizando métricas de requisições por segundo (RPS) e tamanho da requisição.
 
-Os resultados obtidos após a avaliá-los foram documentados no capítulo quatro
+Os resultados obtidos após avaliá-los foram documentados no capítulo quatro
 deste trabalho, assim como as variáveis utilizadas para os testes feitos.
 
 \section{ORGANIZAÇÃO DO TRABALHO}
