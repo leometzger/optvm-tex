@@ -9,7 +9,7 @@ o comportamento da API. Além das diferentes métricas, os dados inseridos
 também possuem diferentes formatos e valores. Isso foi feito para que 
 seja avaliado o comportamento da API em diferentes cenários, o objetivo é perceper
 se o comportamento é alterado considerávelmente ou mantem seu comportamento
-mesmo em casos extremos.
+mesmo em casos extremos e medir sua escalabilidade.
 
 Esta avaliação é importante, pois,
 dependendo aonde a API estiver instalada, cada requisição gera um custo e este custo 
@@ -55,7 +55,7 @@ arquitetura do sistema, se há consulta em banco de dados ou não, algoritmos ut
 Esta métrica define se a utilização de um serviço é viável em relação a quantidade de consumidores ou
 quantidade de utilização, ou seja, se atende as necessidades de uso do consumidor do serviço. 
 Através desta métrica é possível identificar gargalos na utilização. Para esta métrica, foi utilizada 
-a ferramenta WRK. O WRK é uma ferramenta \textit{open-souce} construída em C utilizada 
+a ferramenta WRK (https://github.com/wg/wrk). O WRK é uma ferramenta \textit{open-souce}  construída em C utilizada 
 para fazer \textit{benchmarking} de aplicações HTTP. Com ela é possível fazer requisições 
 concorrentes utilizando múltiplos ou um único core. Além disso, o WRK permite obter uma duração
 do teste, threads e conexões HTTP.

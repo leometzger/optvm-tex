@@ -74,6 +74,7 @@ A arquitetura utilizando SOA fica semelhante a da Figura \ref{fig:soaesb}.
   \caption{SOA com ESB}
   \includegraphics[width=1\textwidth]{./dados/figuras/SOA.png}
   \label{fig:soaesb}
+  \fonte{Autor(2019)}
 \end{figure}
 
 \section{REPRESENTATIONAL STATE TRANSFER (REST)}
@@ -84,8 +85,8 @@ devem ser respeitadas na criação de um software que é implementado utilizando
 As diretivas são maneiras de implementar a API para simplificar o uso e melhorar a 
 arquitetura da API que está sendo construída. 
 
-A comunicação no REST, é feita via \textit{Hypertext Trasfer Protocol} (HTTP). Desta meneira
-a comunicação cliente-servidor é feita utilizando as funcionalidades que o protocolo suporta,
+Conforme \cite{fielding} a comunicação no REST, é feita via \textit{Hypertext Trasfer Protocol} (HTTP). 
+Desta meneira a comunicação cliente-servidor é feita utilizando as funcionalidades que o protocolo suporta,
 como: a utilização de cabeçalhos, \textit{query-strings}, \textit{Universal Resource Identifiers}(URIs),
 entre outros recursos do protocolo.
 
@@ -94,13 +95,14 @@ entre outros recursos do protocolo.
   \caption{REST sobre HTTP simples}
   \includegraphics[width=1\textwidth]{./dados/figuras/rest-1.png}
   \label{fig:rest1}
+  \fonte{Autor(2019)}
 \end{figure}
 
 Neste capítulo são apresentadas as seis diretivas que são definidas por Fielding
 que um sistema deve atender quando REST é utilizado e a maneira de utilização dos
 verbos HTTP no padrão arquitetural. 
 
-As diretivas, podem ser atendidas em sua totalidade
+Segundo \cite{fielding} as diretivas, podem ser atendidas em sua totalidade
 ou não, isso depede do nível de maturidade da API. Uma API que não atende todas as diretivas 
 não está deixando de utilizar REST, apenas o utiliza com um nível de maturidade
 menor. As seis diretivas do REST são:
@@ -157,6 +159,7 @@ ser feito através de links contidos nos corpos da mensagem ou cabeçalhos da re
   \caption{Recursos REST}
   \includegraphics[width=1\textwidth]{./dados/figuras/rest-2.png}
   \label{fig:rest2}
+  \fonte{Autor(2019)}
 \end{figure}
 
 \subsection{Cliente-servidor}
@@ -205,7 +208,7 @@ tipo de requisição da API através do tipo do verbo utilizado.
 \input{dados/tabelas/verbos-http.tex}
 
 \section{SIMPLE OBJECT ACCESS PROTOCOL (SOAP)}
-SOAP é um protocolo de comunicação baseado em XML(eXtension Markup Language) que foi criado no final 
+Segundo \cite{lecheta} SOAP é um protocolo de comunicação baseado em XML(eXtension Markup Language) que foi criado no final 
 dos anos 90. Seu objetivo é fazer a comunicação entre o cliente e o servidor através de informações 
 passadas através de um documento XML. O protocolo utiliza um \textit{schema} XML, que é uma 
 maneira de descrever e validar o formato os dados das requisições e respostas. 
@@ -237,7 +240,7 @@ Uma comparação do SOAP com o rest, pode ser observado na Tabela \ref{tab:rest-
 \input{dados/tabelas/rest-vs-soap.tex}
 
 \section{ALGORITMOS GENÉTICOS (GA)}
-Algoritmos genéticos (GAs) são uma classe de algoritmos que se baseam
+Segundo \cite{ticona} algoritmos genéticos (GAs) são uma classe de algoritmos que se baseam
 na evolução natural de Darwin. Esse processo envolve criar uma população,
 selecionar os indivíduos mais aptos através de uma função objetivo,
 aplicar mutação e \textit{crossover} na população. 
@@ -249,7 +252,7 @@ seleção natural, os mais "adequados" sobrevivem. O processo evolutivo
 continua até que haja um critério de parada. Este processo é
 ilustrado no fluxograma da Figura \ref{fig:gaalgorithm}.
 
-De maneira geral, o GA utiliza a função objetivo (OF) para
+Segundo \cite{ticona} De maneira geral, o GA utiliza a função objetivo (OF) para
 a seleção, ou seja, escolha dos mais adequados, 
 utiliza o \textit{crossover} para a convergência das soluções para melhores soluções,
 e a mutação como operador de diversidade. Estes operadores são importante para
@@ -260,6 +263,7 @@ obter tipos diferentes de soluções, inicialmente inexplorados pelo algoritmo.
   \caption{Exemplo GA}
   \includegraphics[width=0.65\textwidth]{./dados/figuras/ga-algorithm.png}
   \label{fig:gaalgorithm}
+  \fonte{Autor(2019)}
 \end{figure}
 
 \subsection{Seleção}
@@ -320,6 +324,7 @@ o quão apto aquele espaço de busca é em relação aos objetivos.
   \caption{Espaço de decisáo e espaço dos objetivos}
   \includegraphics[width=0.9\textwidth]{./dados/figuras/searchspace-decisionspace.png}
   \label{fig:moospaces}
+  \fonte{Autor(2019)}
 \end{figure}
 
 \subsection{Dominância de pareto}
@@ -355,6 +360,7 @@ são as melhores soluções para um problema levando em conta os múltiplos obje
   \caption{Pareto-front}
   \includegraphics[width=0.6\textwidth]{./dados/figuras/pareto-front.png}
   \label{fig:paretofront}
+  \fonte{Autor(2019)}
 \end{figure}
 
 \section{TRABALHOS RELACIONADOS}
@@ -368,12 +374,13 @@ se propondo a resolver.
 
 \subsection{Migração de máquinas virtuais}
 As nuvens computacionais são utilizadas pela maioria das empresas de software da atualidade. 
-Por esse motivo, as maiores empresas do setor investem muito neste segmento, 
+Por esse motivo, as maiores empresas do setor investem neste segmento, 
 oferecendo vários tipos de serviços diferenciados para seus consumidores. 
 Estas empresas concorrem em alguns aspectos, como: velocidade, preço, disponibilidade e etc. 
 Para aumentar sua competitividade, é utilizada a virtualização.
 
-Com a virtualização é possível alocar partes de um recurso físico para diferentes consumidores, 
+Segundo \cite{lopez2015virtual} com a virtualização é possível alocar partes de um recurso físico para 
+diferentes consumidores, 
 fazendo com que um recurso físico se torne melhor utilizado. Isso deixa a alocação de recursos
 muito mais flexível, e torna possível obter uma elasticidade nos serviços oferecidos. 
 
@@ -390,8 +397,8 @@ A realocação de uma VM pode ser feita a nível de nuvem, datacenter(DC) ou hos
 Quando a realocação é feita em nível de DC ou nuvem, é muito provável que seja 
 necessário migrar uma VM do local em que ela se encontra. 
 
-Três momentos podem ser considerados os pontos principais a serem avaliados para uma migração, 
-são eles:
+Segundo \cite{beloglazov2012energy} três momentos podem ser considerados os pontos principais a 
+serem avaliados para uma migração, são eles:
 
 \begin{enumerate}
 \item A descoberta de uma necessidade de migração
@@ -399,7 +406,7 @@ são eles:
 \item Para onde deve ocorrer a migração
 \end{enumerate}
 
-As migrações das VMs são necessárias em ambientes que envolvem uma infraestruturas
+Conforme o trabalho de \cite{lopez2015virtual} as migrações das VMs são necessárias em ambientes que envolvem uma infraestruturas
 grande, onde existem multiplos hosts, datacenters e nuvens. Por esse motivo, não é recomendado que 
 um sistema ou serviço gerencie a infraestrutura inteira sozinho, pois sua escalabilidade 
 poderia se tornar um gargalo. Isso faz com que sejam construidos diferentes serviços e aplicações 

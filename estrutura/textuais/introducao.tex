@@ -18,15 +18,14 @@ Um cenário em que temos a possibilidade de utilizar as PMs como host de múltip
 é possível que as VMs da nuvem sejam organizadas de diferentes maneiras em relação as PMs. A decisão
 de organizar a nuvem de uma maneira ou de outra, envolvem os objetivos de quem está gerenciando a nuvem. 
  
- Os objetivos podem ser os mais variados. Por exemplo, uma empresa que 
- use o serviço da nuvem pode querer ter um alto desempenho, assim como pode querer ter o menor custo 
- possível. Para alcançar estes objetivos é necessário mover VMs de um host para outro, isso se chama
- realocação de VM e é feita através de uma migração. 
- Por esse motivo, existem pesquisas que buscam maneiras de otimizar a alocação e realocação de VMs.
+Os objetivos podem ser os mais variados. Por exemplo, uma empresa que 
+use o serviço da nuvem pode querer ter um alto desempenho, assim como pode querer ter o menor custo 
+possível. Para alcançar estes objetivos é necessário mover VMs de um host para outro, isso se chama
+realocação de VM e é feita através de uma migração. 
+Por esse motivo, existem pesquisas que buscam maneiras de otimizar a alocação e realocação de VMs.
 
-A migração de uma VM envolve três etapas: a descoberta da necessidade de migração, 
+Para \cite{beloglazov2012energy} a migração de uma VM envolve três etapas: a descoberta da necessidade de migração, 
 a escolha de uma VM a ser migrada e a escolha de um host de destino para essa VM.
-A etapa em que este trabalho está interessado é a escolha de um host de destino para a VM. 
 Considerando que uma migração seja considerada cara do ponto de vista computacional, 
 o momento da migração deve ser bem escolhido para evitar que a migração da VM feita não gere  
 prejuízos ou problemas maiores do que a própria sobrecarga do host. 
@@ -34,21 +33,23 @@ Assim como o momento da migração é importante, a escolha de um destino també
 pois o host selecionado tem que melhorar a maneira em que os hosts estão organizados naquele determinado momento, 
 para que não haja novas migrações por conta da migração inicial.
 
-Considerando uma federação de nuvens computacionais, a seleção de um host para uma VM migrar é
-uma tarefa considerada difícil. Existem diversas formas de realizar uma tarefa assim, e uma delas é:
-utilizando algoritmos de otimização. É comum que os problemas de otimização atuais busquem otimizar
-mais que um objetivo. Por esse motivo existem problemas que são resolvidos por \textit{Multiobjective
-optimization} MOO. Este é o caso do problema da seleção de \textit{hosts}.
+Segundo \cite{ticona} é comum que os problemas de otimização 
+atuais busquem otimizar mais que um objetivo. Esse tipo de 
+otimização é chamado de \textit{Multiobjective optimization} MOO. 
 
 Este trabalho tem papel de servir como apoio para a migração de VMs em ambientes de computação em nuvem. 
 Isto é feito através de uma abordagem em que um gerenciador de nuvem, que precise migrar uma VM, possa 
 utilizar um \textit{webservice} que selecionará as melhores opções de host para fazer a migração de uma VM. 
-Por ser um \textit{webservice}, o trabalho permite que seja reutilizado. O \textit{webservice} possui uma abordagem que 
-utiliza algoritmos que fazem uma seleção dos melhores hosts baseando-se 
-nos objetivos do consumidor do mesmo. Contudo, o \textit{webservice} é uma solução caixa preta, esta característica 
-traz uma grande vantagem, o usuário não precisa conhecer nada sobre os algoritmos utilizados, 
+Para este \textit{webservice}  que foi desenvolvido foi dado o nome de \textbf{OptVM}.
+O OptVM otimiza a escolha do host baseando-se em múltiplos objetivos.
+Além disso, por ser um \textit{webservice}, o trabalho permite que seja utilizado por 
+diferentes consumidores. 
+
+O OptVM possui uma abordagem que utiliza algoritmos que fazem uma seleção dos melhores hosts baseando-se 
+nos objetivos que o consumidor mesmo escolhe. Contudo, o OptVM é uma solução caixa preta, esta característica 
+traz uma grande vantagem, pois o usuário não precisa conhecer nada sobre os algoritmos utilizados, 
 precisa apenas utilizar a interface que é definida pelo serviço. A interface do serviço é baseada em
-\textit{webservices}, utilizando padrões conhecidos para facilitar a integração dos gerenciadores
+\textit{webservices} REST, utilizando padrões conhecidos para facilitar a integração dos gerenciadores
 das núvens computacionais.
 
 Este trabalho apresenta uma aplicação prática da construção de um \textit{webservice} utilizando padrões conhecidos

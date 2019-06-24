@@ -1,13 +1,23 @@
 \chapter{OPTVM}
 
-O OptVM é um sistema que tem o propósito de dar suporte para a migração de VMs em um ambientes de núvens federadas,
-isso é feito através \textit{webservices} utilizando o modelo cliente-servidor, mais específicamente o padrão arquitetural 
-Representational State Transfer(REST).
+O OptVM é o sistema que foi desenvolvido que tem o propósito de dar suporte para a otimização de migração de VMs em um ambientes 
+de núvens federadas, isso é feito através \textit{webservices} utilizando o modelo cliente-servidor, 
+mais específicamente o padrão arquitetural \textit{Representational State Transfer} (REST).
 
 O sistema possui dois principais componentes para atingir seu objetivo: um deles, faz uma filtragem de hosts aplicando 
-restrições. E o outro faz uma otimização na escolha de um subconjunto de possíveis hosts para uma VM migrar. 
+restrições (\textit{Constraint Applyier}). E o outro faz uma otimização \textit{Optimizer} na escolha de um 
+subconjunto de possíveis hosts para uma VM migrar. Os componentes são ilustrados pela figura \ref{fig:architecture}.
+os dois componentes estão relacionados, porém são representados e aplicados separadamente. 
 
-As restrições que são aplicadas aos possíveis destinos (hosts), elas servem para desconsiderar os destinos 
+\begin{figure}[!htb]
+  \centering
+  \caption{Arquitetura}
+  \includegraphics[width=0.5\textwidth]{./dados/figuras/architecture}
+  \fonte{Autor(2019)}
+  \label{fig:architecture}
+\end{figure}
+
+No \textit{Constraint Applyier} as restrições que são aplicadas aos possíveis destinos (hosts), elas servem para desconsiderar os destinos 
 que não são passiveis de migração por causa de regras de negócio. As restrições no 
 OptVM são pré-definidas, ou seja, elas devem ser apenas escolhidas e parametrizadas pelo 
 usuário da API, não é possível criar um tipo de restrição. Por exemplo, podem ser definidas regras do tipo: 
@@ -16,8 +26,9 @@ da regra pode ser parametrizado. Esta regra, pode ser parametrizada com EUA e Is
 Além disso, as restrições são aplicadas antes da otimização, para o sistema desconsiderar hosts que
 não são realmente alvos de migração e limitar o espaço de busca da otimização.
 
-O outro componente, o qual define um melhor subconjunto de hosts faz isso utilizando MOO. Essa
-otimização, possui um conjunto de funções objetivo pré-definidas. Esses objetivos também podem ser escolhidos
+O outro componente, o \textbf{optimizer}, o qual define um melhor subconjunto de hosts faz 
+isso utilizando MOO. Essa otimização, possui um conjunto de funções objetivo pré-definidas. 
+Esses objetivos também podem ser escolhidos
 e parametrizados pelo usuário da aplicação conforme sua necessidade. Os objetivos,
 assim como as restrições, são pré-definidos pelo OptVM e o usuário tem a opção de utilizá-los ou não.
 Os \textbf{objetivos da otimização}, são interesses do usuário, por exemplo, minimização do consumo de energia.
@@ -30,10 +41,6 @@ foi criado um recurso que representa essa configuração e parametrização. Par
 O OptVM busca ser uma solução caixa preta, onde, o usuário não necessita saber nada sobre o funcionamento interno, 
 algoritmos utilizados, etc. Basta utilizar as \textit{Application Programming Interfaces} (APIs) para fazer uso de suas funcionalidades.
 A intenção é que o usuário não precise entender sobre como as coisas são feitas internamente para obter as vantagens do uso do OptVM.
-
-O OptVM é dividido em dois principais componentes: O aplicador de constraints (\textit{constraint applyier})
-e o otimizador(\textit{optmizer}). Os dois componentes estão relacionados, porém são representados e 
-aplicados separadamente. 
 
 Neste capítulo, serão apresentados aspectos gerais em relação a implementação e uso do OptVM. 
 No primeiro momento serão mostrados os dois componentes que integram o sistema. 
@@ -139,8 +146,9 @@ restrições e como elas funcionam.
 \subsection{Tipos de restrições (constraints)}
 
 As restrições pré definidas, tem um \textit{alias} para que o usuário do serviço faça a identificação no uso delas.
-Os tipos de restrições disponibilizadas pelo OptVM operam em 3 níveis, são eles: \textbf{cloud}, \textbf{datacenter} (DC)
-e \textbf{hosts}.
+Segundo \cite{saber2015towards} os tipos de restrições podem operar em 3 níveis, 
+são eles: \textbf{cloud}, \textbf{datacenter} (DC) e \textbf{hosts}. A mesma separação é 
+feita no OptVM.
 
 Cada restrição tem uma responsabilidade específica, uma regra de negócio que não deve ser infringida. 
 As restrições disponibilizadas e seus respectivos níveis são as seguintes:
@@ -195,6 +203,7 @@ raiz e indo em direção aos nós folhas.
   \centering
   \caption{Exemplo de aplicação das constraints}
   \includegraphics[width=1\textwidth]{./dados/figuras/constraintapplyier}
+  \fonte{Autor(2019)}
   \label{fig:constraintapplyier}
 \end{figure}
 
@@ -389,11 +398,16 @@ para fazer uma otimização, é seguido o seguinte fluxo:
  \item Obtenção do subconjunto de hosts otimização.
 \end{enumerate}
 
+Este fluxo é ilustrado pela Figura \ref{fig:overview}, onde, o fluxo é iniciado 
+pela criação de uma política e depois a criação de otimização. A Figura \ref{fig:overview}
+também mostra quais e o que são os recursos disponíveis.
+
 \begin{figure}[!htb]
   \centering
-  \caption{Exemplo de aplicação das constraints}
+  \caption{Visão geral.}
   \includegraphics[width=1\textwidth]{./dados/figuras/overview.png}
   \label{fig:overview}
+  \fonte{Autor(2019)}
 \end{figure}
 
 Apesar do caso de uso básico, é possível utilizar a API de maneiras diferentes,
@@ -466,12 +480,14 @@ para o usuário.
 
 \begin{figure}[!htb]
   \centering
-  \caption{Exemplo de aplicação das constraints}
+  \caption{Fluxograma da otimização}
   \includegraphics[width=0.5\textwidth]{./dados/figuras/fluxograma-otimizacao.png}
   \label{fig:fluxograma-otimizacao}
+  \fonte{Autor(2019)}
 \end{figure}
 
-E a resposta tem o seguinte formato:
+Após passar pelo fluxo da Figura \ref{fig:fluxograma-otimizacao}. A resposta 
+obtida tem o seguinte formato:
 
 \begin{lstlisting}[language=json,firstnumber=1]
 {
@@ -512,8 +528,9 @@ existem diversos algoritmos, incluindo vários tipos de GAs, que foram utilizado
 no desenvolvimento deste trabalho.
 
 \subsection{MongoDB}
-MongoDB é um banco de dados orientado a documentos. A escolha dele foi
-feita por dois principais motivos:
+Segundo \cite{chodorow2013mongodb} o MongoDB é um banco de dados 
+\textit{Not Only SQL} NoSQL orientado a documentos. Ele é flexível e escalável. 
+A escolha dele foi feita por dois principais motivos:
 
 \begin{enumerate}
   \item Facilidade no desenvolvimento;
